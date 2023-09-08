@@ -1,0 +1,54 @@
+name: aws-docker
+on:
+  push:
+    branches: 'dev, hml'
+
+jobs:
+  PublicaNaAWS:
+    runs-on: [ estoqueinteligente, dev ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.5.2
+
+      - name: Cria Variáveis
+        id: create_variables
+        continue-on-error: true
+        run: |
+          branch=${{ github.ref }}
+          branch=${branch/refs\/heads\//}
+          repo=${{ github.repository }}
+          repo=${repo/*\//}
+          repo=${repo,,} # converte o nome do repositório para minúsculo
+
+          echo $branch | tee branch.txt
+          echo $repo | tee repo.txt
+      
+      - name: Ativa debug
+        id: debug
+        run: sed -i 's/DEBUG = False/DEBUG = True/g' app/DjangoApi/DjangoApi/settings.py
+
+      - name: Atualiza imagem do app
+        id: change_image
+        run: |
+          branch=$(cat branch.txt)
+          repo=$(cat repo.txt)
+
+          docker build -t ${repo}:${branch} .
+      
+          if docker inspect "${repo}_${branch}_a" >/dev/null 2>&1; then
+            docker run -d \
+                --name ${repo}_${branch}_b \
+                --network nginx-proxy \
+                -e "VIRTUAL_HOST=${branch}.${repo}.dispensainteligente.com" \
+                -e "LETSENCRYPT_HOST=${branch}.${repo}.dispensainteligente.com" \
+                ${repo}:${branch} && \
+            docker rm -f ${repo}_${branch}_a
+          else
+            docker run -d \
+                --name ${repo}_${branch}_a \
+                --network nginx-proxy \
+                -e "VIRTUAL_HOST=${branch}.${repo}.dispensainteligente.com" \
+                -e "LETSENCRYPT_HOST=${branch}.${repo}.dispensainteligente.com" \
+                ${repo}:${branch} && \
+            docker rm -f ${repo}_${branch}_b || true
+          fi

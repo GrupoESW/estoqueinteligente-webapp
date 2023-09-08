@@ -1,0 +1,51 @@
+name: Branch Deletada
+on:
+    delete: 
+jobs: 
+    build: 
+        runs-on: [ estoqueinteligente, dev ]
+        steps: 
+            - name: Checkout 
+              uses: actions/checkout@v2 
+            
+            - name: Obter Branches e Repo
+              env: 
+                ACCESS_TOKEN: ${{ secrets.CI_ACCESS_TOKEN }}
+              run: |
+                headers="Authorization: token $ACCESS_TOKEN"
+                api_url="https://api.github.com/repos/${{ github.repository }}/branches"
+                response=$(curl -sSL -H "$headers" "$api_url")
+
+                repo=${{ github.repository }}
+                repo=${repo/*\//}
+                repo=${repo,,} # converte o nome do repositório para minúsculo
+                
+                branches=$(echo "$response" | jq -r '.[] | .name')
+                containernames=$(for b in $branches; do echo "${repo}_${b}_a ";echo "${repo}_${b}_b " done | tr -d '\n')
+
+                echo "$branches" | tee branches.txt
+                echo "$containernames" | tee containernames.txt
+                echo $branch | tee branch.txt
+                echo $repo | tee repo.txt
+            
+            - name: Remove containers de branches deletadas
+              run: |
+                branches=$(cat branches.txt)
+                containernames=$(cat containernames.txt)
+                repo=$(cat repo.txt)
+
+                # Obter a lista de IDs de todos os containers
+                container_ids=$(docker ps -aq)
+
+                # Iterar sobre os IDs dos containers
+                for id in $container_ids; do
+                # Obter o nome do container usando o comando docker inspect
+                container_name=$(docker inspect -f '{{.Name}}' $id)
+                # Remover a barra inicial (/) do nome do container
+                container_name=${container_name:1}
+                
+                if [[ "$containernames" == *"${container_name}"* ]]
+                then echo "Branch existe"
+                else docker rm -fv $container_name
+                fi
+                done
