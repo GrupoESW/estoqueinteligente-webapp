@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Flask Simple Project</title>
+  </head>
+  <body>
+    <button id="apiButton">Chamar API</button>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+      $(document).ready(function(){
+        $("#apiButton").click(function(){
+          $.get("https://dev.api.dispensainteligente.com/example", function(data, status){
+            alert("Data: " + data + "\nStatus: " + status);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
