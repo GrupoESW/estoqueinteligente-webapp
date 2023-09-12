@@ -22,10 +22,6 @@ jobs:
 
           echo $branch | tee branch.txt
           echo $repo | tee repo.txt
-      
-      - name: Ativa debug
-        id: debug
-        run: sed -i 's/DEBUG = False/DEBUG = True/g' app/DjangoApi/DjangoApi/settings.py
 
       - name: Atualiza imagem do app
         id: change_image
