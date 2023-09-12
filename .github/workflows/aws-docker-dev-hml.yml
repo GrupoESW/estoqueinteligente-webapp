@@ -1,7 +1,7 @@
 name: aws-docker
 on:
   push:
-    branches: 'dev, hml'
+    branches: [ dev, hml ]
 
 jobs:
   PublicaNaAWS:
