@@ -39,16 +39,16 @@ jobs:
             docker run -d \
                 --name ${repo}_${branch}_b \
                 --network nginx-proxy \
-                -e "VIRTUAL_HOST=${branch}.${repo/*-/}.dispensainteligente.com" \
-                -e "LETSENCRYPT_HOST=${branch}.${repo/*-/}.dispensainteligente.com" \
+                -e "VIRTUAL_HOST=${branch}.${repo/*-/}.dispensainteligente.com.br" \
+                -e "LETSENCRYPT_HOST=${branch}.${repo/*-/}.dispensainteligente.com.br" \
                 ${repo}:${branch} && \
             docker rm -f ${repo}_${branch}_a
           else
             docker run -d \
                 --name ${repo}_${branch}_a \
                 --network nginx-proxy \
-                -e "VIRTUAL_HOST=${branch}.${repo/*-/}.dispensainteligente.com" \
-                -e "LETSENCRYPT_HOST=${branch}.${repo/*-/}.dispensainteligente.com" \
+                -e "VIRTUAL_HOST=${branch}.${repo/*-/}.dispensainteligente.com.br" \
+                -e "LETSENCRYPT_HOST=${branch}.${repo/*-/}.dispensainteligente.com.br" \
                 ${repo}:${branch} && \
             docker rm -f ${repo}_${branch}_b || true
           fi
