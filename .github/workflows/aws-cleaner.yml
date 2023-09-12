@@ -21,7 +21,7 @@ jobs:
                 repo=${repo,,} # converte o nome do repositório para minúsculo
                 
                 branches=$(echo "$response" | jq -r '.[] | .name')
-                containernames=$(for b in $branches; do echo "${repo}_${b}_a ";echo "${repo}_${b}_b " done | tr -d '\n')
+                containernames=$(for b in $branches; do echo "${repo}_${b}_a ";echo "${repo}_${b}_b " ;done | tr -d '\n')
 
                 echo "$branches" | tee branches.txt
                 echo "$containernames" | tee containernames.txt
