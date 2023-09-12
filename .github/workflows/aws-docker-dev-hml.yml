@@ -1,4 +1,4 @@
-name: aws-docker
+name: aws-docker-devhml
 on:
   push:
     branches: [ dev, hml ]
