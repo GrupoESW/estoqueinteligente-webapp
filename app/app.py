@@ -13,4 +13,4 @@ def login():
 
 if __name__ == '__main__':
     port_number = 80
-    app.run(debug=True, host='localhost', port=port_number)
+    app.run(debug=True, host='0.0.0.0', port=port_number)
