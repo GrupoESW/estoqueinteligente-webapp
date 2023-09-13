@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dispensa inteligente</title>
+<style>
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #333;
+    color: #fff;
+}
+
+.container {
+    width: 300px;
+    padding: 16px;
+    background-color: #444;
+    margin: 0 auto;
+    margin-top: 100px;
+    border-radius: 4px;
+}
+
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+.btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+    margin-top: 10px;
+}
+
+.btn:hover {
+    opacity: 1;
+}
+
+.title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.btn-social {
+    background-color: #3B5998;
+    margin-top: 10px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <label class="title">Dispensa Inteligente</label>
+
+    <label for="uname"><b>Usuário</b></label>
+    <input type="text" placeholder="Insira o seu usuário" name="uname" required>
+
+    <label for="psw"><b>Senha</b></label>
+    <input type="password" placeholder="Insira a sua senha" name="psw" required>
+
+    <button type="submit" class="btn">Login</button>
+
+    <button class="btn btn-social">Login com Facebook</button>
+    <button class="btn btn-social">Login com Google</button>
+</div>
+
+</body>
+</html>
