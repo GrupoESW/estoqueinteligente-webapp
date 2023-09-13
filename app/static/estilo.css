@@ -22,7 +22,7 @@ body {
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, .1);
-    background-color: #818181;
+    background-color: #444;
   }
   
   .panel-title {
@@ -145,7 +145,7 @@ input[type=text]:focus, input[type=password]:focus {
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, .1);
-    background-color: #818181;
+    background-color: #444;
   }
   
   /*.rounded-table tbody tr:last-child td {
