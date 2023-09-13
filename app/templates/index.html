@@ -3,19 +3,25 @@
 <head>
 <title>Dispensa Inteligente</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='estilo.css') }}">
+<script src="{{ url_for('static', filename='sidebar.js') }}"></script>
 </head>
 
 <body>
 
-<div class="container">
+  <div id="mySidenav" class="sidenav">
     <label class="title">Dispensa Inteligente</label>
 
-    <button class="btn">Estoque</button>
-    <button class="btn">Receitas</button>
-    <button class="btn">Sugestão de Receitas</button>
-    <button class="btn" id="apiButton">Chamar API</button>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="#">Estoque</a>
+    <a href="#">Receitas</a>
+    <a href="#">Sugestão de Receitas</a>
+    <a id="apiButton">Chamar API</a>
+  </div>
+
+  <span style="cursor:pointer" onclick="openNav()">&#9776;</span> 
+  <label class="title">  Dispensa Inteligente</label>
+
+  <script>
       $(document).ready(function(){
         $("#apiButton").click(function(){
           $.get("https://{{ api_url }}/example", function(data, status){
@@ -24,7 +30,6 @@
         });
       });
     </script>
-</div>
 
 </body>
 </html>
