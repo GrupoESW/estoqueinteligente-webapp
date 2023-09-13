@@ -7,7 +7,7 @@ WORKDIR /app
 ADD ./app /app
 
 # Install any needed packages specified in requirements.txt
-RUN pip install --trusted-host pypi.python.org Flask==1.0.2
+RUN pip install --trusted-host pypi.python.org Flask==2.0.3
 
 # Make port 80 available to the world outside this container
 EXPOSE 80
