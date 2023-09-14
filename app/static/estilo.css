@@ -1,9 +1,7 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
     background-color: #122c64;
-    color: #fff;
-    display: flex;
-    flex-wrap: wrap;
+    color: #fff
 
 }
 .notification {
@@ -18,7 +16,7 @@ body {
   }
   
   .panel {
-    width: 25%;
+    width: 21%;
     height: 150px;
     margin: 10px;
     padding: 10px;
@@ -85,7 +83,7 @@ input[type=text]:focus, input[type=password]:focus {
 
 .sidenav {
     height: 100%;
-    width: 0;
+    width: 0%;
     position: fixed;
     z-index: 1;
     top: 0;
@@ -121,12 +119,13 @@ input[type=text]:focus, input[type=password]:focus {
   .panels {
     display: flex;
     flex-wrap: wrap;
-    margin-left: 30%;
-
+    margin: 0 auto;
+    width: 100%;
+    transition: 0.5s;
   }
 
   .rounded-table {
-    width: 90%;
+    width: 80%;
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 0 10px rgba(0,0,0,0.15);

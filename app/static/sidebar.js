@@ -1,9 +1,11 @@
 function openNav() {
-    document.getElementById("mySidenav").style.width = "250px";
-  }
-  
+    document.getElementById("mySidenav").style.width = "15%";
+    document.getElementById("myDash").style.margin = "0 0 0 15%";
+  }    
+
   function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("mySidenav").style.width = "0%";
+    document.getElementById("myDash").style.margin = "0";
   }
   
   $(document).ready(function(){
