@@ -2,6 +2,9 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     background-color: #122c64;
     color: #fff;
+    display: flex;
+    flex-wrap: wrap;
+
 }
 .notification {
     position: absolute;
@@ -79,12 +82,6 @@ input[type=text]:focus, input[type=password]:focus {
     background-color: #ddd;
     outline: none;
 }
-
-
-
-
-
-
 
 .sidenav {
     height: 100%;
