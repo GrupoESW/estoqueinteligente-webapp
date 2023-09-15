@@ -1,7 +1,7 @@
 name: aws-docker-devhml
 on:
   push:
-    branches: [ dev, hml ]
+    branches-ignore: main
 
 jobs:
   PublicaNaAWS:
