@@ -11,6 +11,7 @@
 </head>
 
 <body>
+
   <nav class="menu-sidebar">
 
     <ul>
@@ -20,22 +21,22 @@
                 <i class="icon icon-home icon-text"></i>
               </div>
                 <span class="menu-texto">
-                    Página Inícial
+                  &nbsp;&nbsp;Página Inícial
                 </span>
             </a>
           
         </li>
-
+<br>
         <li class="has-subnav">
             <a href="#">
               <div class="icone">
-                <i class="icon icon-file-text icon-text"></i>
+                <i class="iconP icon-file-text icon-text"></i>
               </div>
-                <span class="menu-texto">Posts</span>
+                <span class="menu-texto">&nbsp;&nbsp;&nbsp;&nbsp;Posts</span>
             </a>
             
         </li>
-        
+        <br>    
         <li class="has-subnav">
             <a href="#">
               <div class="icone">
@@ -45,17 +46,18 @@
             </a>
             
         </li>
-
+        <br>
         <li class="has-subnav">
             <a href="#">
               <div class="icone">
-               <i class="icon icon-play-circle icon-text"></i>
+               <i class="iconP icon-play-circle icon-text"></i>
               </div>
-                <span class="menu-texto">Vídeos</span>
+                <span class="menu-texto">&nbsp;&nbsp;Vídeos</span>
             </a>
            
         </li>
-        
+        <br>
+
         
         <li>
            <a href="#">
@@ -65,16 +67,18 @@
                 <span class="menu-texto">Comentários</span>
             </a>
         </li>
+        <br>
 
         <li>
            <a href="#">
             <div class="icone">
-                <i class="icon icon-gear icon-text"></i>
+                <i class="iconP icon-gear icon-text"></i>
             </div>
-                <span class="menu-texto">Configurações</span>
+                <span class="menu-texto">&nbsp;&nbsp;Configurações</span>
             </a>
         </li>
-    
+        <br>
+
         <li>
             <a href="#">
               <div class="icone">
@@ -98,23 +102,13 @@
         </li>
 
     </ul>
+    <div id="myDash" class="panels">
 
 </nav>
-  <div id="mySidenav" class="sidenav">
-    <label class="title">Dispensa Inteligente</label>
-
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a href="#">Estoque</a>
-    <a href="#">Receitas</a>
-    <a href="#">Sugestão de Receitas</a>
-    <a id="apiButton">Chamar API</a>
-  </div>
 
   <span class="notification">2</span>
 
-
-<div id="myDash" class="panels">
-  <span style="cursor:pointer" onclick="openNav()">&#9776;</span>
+<div class="panels">
   <div class="panel">
     <div class="panel-title">Ingredientes vencendo</div>
     <div>4</div>
@@ -129,7 +123,8 @@
     <div class="panel-title">Receitas cadastradas</div>
     <div>5</div>
   </div>
-
+</div>
+<div class="table">
   <table class="rounded-table">
     <thead>
        <tr>
@@ -166,6 +161,7 @@
      </tr>
     </tbody>
   </table>
+  </div>
 </div>
   <script>
       $(document).ready(function(){
