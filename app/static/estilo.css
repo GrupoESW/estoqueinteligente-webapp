@@ -164,7 +164,7 @@ input[type=text]:focus, input[type=password]:focus {
 
 
 
-  .icon-text { font-size: 2em; }
+.icon-text { font-size: 2em; }
 
 .icon {
 
@@ -188,7 +188,7 @@ input[type=text]:focus, input[type=password]:focus {
 
 .menu-sidebar {
 
-	width:65px;
+	width:25px;
 	height:100%;
 	top:0;
 	left:0;
@@ -249,6 +249,7 @@ input[type=text]:focus, input[type=password]:focus {
    vertical-align:middle;
    width:190px;
    font-family: 'open_sansregular';
+   padding-left: 15px;
 
 }
 
