@@ -4,27 +4,111 @@
 <title>Dispensa Inteligente</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='estilo.css') }}">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"/>
+<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 <script src="{{ url_for('static', filename='sidebar.js') }}"></script>
 
 </head>
 
 <body>
 
-  <div id="mySidenav" class="sidenav">
-    <label class="title">Dispensa Inteligente</label>
+  <nav class="menu-sidebar">
 
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a href="#">Estoque</a>
-    <a href="#">Receitas</a>
-    <a href="#">Sugestão de Receitas</a>
-    <a id="apiButton">Chamar API</a>
-  </div>
+    <ul>
+        <li>
+            <a href="#">
+              <div class="icone">
+                <i class="icon icon-home icon-text"></i>
+              </div>
+                <span class="menu-texto">
+                  &nbsp;&nbsp;Página Inícial
+                </span>
+            </a>
+          
+        </li>
+<br>
+        <li class="has-subnav">
+            <a href="#">
+              <div class="icone">
+                <i class="iconP icon-file-text icon-text"></i>
+              </div>
+                <span class="menu-texto">&nbsp;&nbsp;&nbsp;&nbsp;Posts</span>
+            </a>
+            
+        </li>
+        <br>    
+        <li class="has-subnav">
+            <a href="#">
+              <div class="icone">
+               <i class="icon icon-camera icon-text"></i>
+              </div>
+                <span class="menu-texto">Galeria de Fotos</span>
+            </a>
+            
+        </li>
+        <br>
+        <li class="has-subnav">
+            <a href="#">
+              <div class="icone">
+               <i class="iconP icon-play-circle icon-text"></i>
+              </div>
+                <span class="menu-texto">&nbsp;&nbsp;Vídeos</span>
+            </a>
+           
+        </li>
+        <br>
+
+        
+        <li>
+           <a href="#">
+            <div class="icone">
+               <i class="icon icon-comments icon-text"></i>
+            </div>
+                <span class="menu-texto">Comentários</span>
+            </a>
+        </li>
+        <br>
+
+        <li>
+           <a href="#">
+            <div class="icone">
+                <i class="iconP icon-gear icon-text"></i>
+            </div>
+                <span class="menu-texto">&nbsp;&nbsp;Configurações</span>
+            </a>
+        </li>
+        <br>
+
+        <li>
+            <a href="#">
+              <div class="icone">
+               <i class="icon icon-envelope icon-text"></i>
+              </div>
+                <span class="menu-texto"> Contato </span>
+            </a>
+        </li>
+    
+    </ul>
+
+    <ul class="logout">
+        
+        <li>
+           <a href="#">
+            <div class="icone">
+                <i class="icon icon-plug icon-text"></i>
+            </div>
+                <span class="menu-texto"> Sair</span>
+            </a>
+        </li>
+
+    </ul>
+    <div id="myDash" class="panels">
+
+</nav>
 
   <span class="notification">2</span>
 
-
-<div id="myDash" class="panels">
-  <span style="cursor:pointer" onclick="openNav()">&#9776;</span>
+<div class="panels">
   <div class="panel">
     <div class="panel-title">Ingredientes vencendo</div>
     <div>4</div>
@@ -39,7 +123,8 @@
     <div class="panel-title">Receitas cadastradas</div>
     <div>5</div>
   </div>
-
+</div>
+<div class="table">
   <table class="rounded-table">
     <thead>
        <tr>
@@ -76,6 +161,7 @@
      </tr>
     </tbody>
   </table>
+  </div>
 </div>
   <script>
       $(document).ready(function(){
