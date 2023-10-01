@@ -15,6 +15,26 @@ def login():
 def dashboard():
     return render_template('dash.html')
 
+@app.route('/estoque')
+def estoque():
+    return render_template('estoque.html')
+
+@app.route('/receitas')
+def receitas():
+    return render_template('receitas.html')
+
+@app.route('/sugestoes')
+def sugestoes():
+    return render_template('sugestoes.html')
+
+@app.route('/alertas')
+def alertas():
+    return render_template('alertas.html')
+
+@app.route('/config')
+def config():
+    return render_template('configs.html')
+
 if __name__ == '__main__':
     port_number = 80
     app.run(debug=True, host='0.0.0.0', port=port_number)
