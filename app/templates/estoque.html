@@ -98,6 +98,29 @@
     <p class="text">Transformando desperdício em delícias: Controle seu estoque!</p>
     <span class="notification">2</span>
   </div>
+  <div class="panels"> 
+    <button class="botoes" id="inserePopupOpen">Editar estoque</button>
+  </div>
+  <div id="popup" class="popup">
+      <div class="popup-content">
+          <span id="inserePopupClose" class="close-button">&times;</span>
+          <form id="stock-operation">
+            <label for="product">Produto:</label><br>
+            <input type="text" id="product" name="product" required><br>
+            
+            <label for="quantity">Quantidade:</label><br>
+            <input type="number" id="quantity" name="quantity" min="1" required><br>
+            
+            <label for="operation">Operação:</label><br>
+            <select id="operation" name="operation">
+              <option value="add">Adicionar ao estoque</option>
+              <option value="remove">Remover do estoque</option>
+            </select><br>
+            
+            <input type="submit" value="Executar">
+          </form>
+      </div>
+  </div>
 <div class="table">
       <table class="rounded-table">
         <thead>
@@ -178,7 +201,8 @@
      }
     }
     </script>
-  
+      <script src="{{ url_for('static', filename='popupEstoque.js') }}"></script>
+
 </body>
 
  
