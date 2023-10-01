@@ -358,7 +358,7 @@
   .panels {
     display: flex;
     flex-wrap: wrap;
-    margin: 15px;
+    margin: 0 auto;
     width: 76%;
     transition: 0.5s;
     align-items: center;
