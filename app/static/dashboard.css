@@ -449,3 +449,9 @@
   text-decoration: none; /* remove qualquer sublinhado do texto no hover */
   color: white; /* mantenho a cor do texto branca */
 }
+
+div.panels a {
+  text-decoration: none;
+  color: white;
+  font-size:large;
+}
