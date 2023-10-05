@@ -1,6 +1,21 @@
 {% extends 'base.html' %}
 
-{% block title %}
-Dashboard
-{% endblock %}
+{% block conteudo %}
+<div class="panels">
+  <div class="panel">
+    <div class="panel-title">Ingredientes vencendo:</div>
+      <div class="panel-value">4</div>
+  </div>
 
+  <div class="panel">
+    <div class="panel-title">Sugestões:</div>
+    <br><div class="panel-value">3</div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">Receitas cadastradas:</div>
+    <div class="panel-value">5</div>
+  </div>
+</div>
+{% include "tabela.html" %}
+  {% endblock conteudo %}

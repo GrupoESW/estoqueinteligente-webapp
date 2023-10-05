@@ -1,43 +1,75 @@
-<!DOCTYPE html>
-<!-- Created by CodingLab |www.youtube.com/CodingLabYT-->
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="UTF-8">
-    <title>Receitas | Dispensa Inteligente</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
-    <!-- Boxicons CDN Link -->
-     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-   </head>
-<body>
+{% extends 'base.html' %}
 
-  {% include 'menu.html' %}
-
-  <section class="home-section">
-    
+{% block conteudo %} 
+<div class="panels"> 
+  <button class="botoes" id="inserePopupOpen">Adicionar receita</button>
 </div>
-  <div class="text">
-    <h1 class="texto-colorido">Dashboard</h1>
-  </div>
-  <div class="text">
-    <p class="text">Transformando desperdício em delícias: Controle seu estoque!</p>
-    <span class="notification">2</span>
-  </div>
-  <div class="panels"> 
-    <button class="botoes" id="inserePopupOpen">Adicionar receita</button>
-  </div>
-  <div id="popup" class="popup">
-      <div class="popup-content">
-          <span id="inserePopupClose" class="close-button">&times;</span>
-          <form id="stock-operation">
-            <label for="product">Nome da receita:</label><br>
-            <input type="text" id="product" name="product" required><br><br>
+<div id="popup" class="popup">
+    <div class="popup-content">
+        <span id="inserePopupClose" class="close-button">&times;</span>
+        <form id="stock-operation">
+          <label for="product">Nome da receita:</label><br>
+          <input type="text" id="product" name="product" required><br><br>
 
-            <div id="ingredient-container">
+          <div id="ingredient-container">
+          <label for="operation">Ingrediente:</label><br>
+          <select id="operation" name="operation">
+            <option value="0">Adicionar novo ingrediente</option>
+            <option value="1">Arroz</option>
+            <option value="2">Feijão</option>
+            <option value="3">Alho</option>
+            <option value="4">Linguiça Calabresa</option>
+          </select><br>
+          
+          <label for="quantity">Quantidade:</label><br>
+          <input type="number" id="quantity" name="quantity" min="1" required><br><br>
+        </div>
+          <input type="button" value="+" id="add-ingredient"><br><br>
+          <input type="submit" value="Executar">
+        </form>
+      </div>
+      </div>
+<div class="table">
+    <table class="rounded-table">
+      <thead>
+         <tr>
+            <th>Nome</th>
+            <th>Ingredientes usados</th>
+            <th>Preparo</th>
+         </tr>
+      </thead>
+      <tbody>
+         <tr>
+            <td>Feijoada</td>
+            <td>Feijão (500g), Alho (3 dentes), sal (1 colher de chá) e Linguiça Calabresa (300g)</td>
+            <td>Cozinhe o feijão e a linguiça junto, refogue o alho e tempere com sal, adicione o feijão cozido.</td>
+         </tr>
+         <tr>
+            <td>Risoto</td>
+            <td>Arroz (1 copo de 200ml), Água (1L), Proteína (200g), alho poró(100g)</td>
+            <td>Coloque a água para ferver e enquanto isso refogue o alho poró junto com a proteína, depois adicione sal e o arroz, refogue mais um pouco e adicione a água fervendo aos poucos, não jogue a água toda, vá adicionando aos poucos.</td>
+         </tr>
+         </tbody>
+    </table>
+
+  </div>
+
+
+    </div>
+
+  <script src="{{ url_for('static', filename='popupEstoque.js') }}"></script>
+  <script>
+    // Função para adicionar um campo de ingrediente
+    function addIngredient() {
+        var container = document.getElementById("ingredient-container");
+        
+        // Crie um novo elemento <div> para o campo de ingrediente
+        var ingredientDiv = document.createElement("div");
+        
+        // Adicione o campo de ingrediente ao novo elemento
+        ingredientDiv.innerHTML = `
             <label for="operation">Ingrediente:</label><br>
             <select id="operation" name="operation">
-              <option value="0">Adicionar novo ingrediente</option>
               <option value="1">Arroz</option>
               <option value="2">Feijão</option>
               <option value="3">Alho</option>
@@ -45,115 +77,15 @@
             </select><br>
             
             <label for="quantity">Quantidade:</label><br>
-            <input type="number" id="quantity" name="quantity" min="1" required><br><br>
-          </div>
-            <input type="button" value="+" id="add-ingredient"><br><br>
-            <input type="submit" value="Executar">
-          </form>
-        </div>
-        </div>
-<div class="table">
-      <table class="rounded-table">
-        <thead>
-           <tr>
-              <th>Nome</th>
-              <th>Ingredientes usados</th>
-              <th>Preparo</th>
-           </tr>
-        </thead>
-        <tbody>
-           <tr>
-              <td>Feijoada</td>
-              <td>Feijão (500g), Alho (3 dentes), sal (1 colher de chá) e Linguiça Calabresa (300g)</td>
-              <td>Cozinhe o feijão e a linguiça junto, refogue o alho e tempere com sal, adicione o feijão cozido.</td>
-           </tr>
-           <tr>
-              <td>Risoto</td>
-              <td>Arroz (1 copo de 200ml), Água (1L), Proteína (200g), alho poró(100g)</td>
-              <td>Coloque a água para ferver e enquanto isso refogue o alho poró junto com a proteína, depois adicione sal e o arroz, refogue mais um pouco e adicione a água fervendo aos poucos, não jogue a água toda, vá adicionando aos poucos.</td>
-           </tr>
-           </tbody>
-      </table>
-
-    </div>
-
-
-      </div>
-
-    <div class="container">
-       <div class="footer">
-          <footer class="bg-light text-center text-white">
-        <!-- Grid container -->
-        <div class="container p-4 pb-0">
-          <!-- Section: Social media -->
-          <section class="mb-4"></section>
-            <!-- Facebook -->
-            
-<!-- Copyright
-        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-          © 2023 Copyright
-          <a class="text-white" href="#"></a>
-        </div>
- Copyright -->
-      </footer>
-  </div>
-  </section>
-  <script>
-    let sidebar = document.querySelector(".sidebar");
-    let closeBtn = document.querySelector("#btn");
-    let searchBtn = document.querySelector(".bx-search");
-  
-    closeBtn.addEventListener("click", ()=>{
-      sidebar.classList.toggle("open");
-      menuBtnChange();//calling the function(optional)
-    });
-  
-    // following are the code to change sidebar button(optional)
-    function menuBtnChange() {
-     if(sidebar.classList.contains("open")){
-       closeBtn.classList.replace("bx-menu", "bx-menu-alt-right","texto-colorido");//replacing the iocns class
-     }else {
-       closeBtn.classList.replace("bx-menu-alt-right","bx-menu","texto-colorido");//replacing the iocns class
-     }
+            <input type="number" name="quantity" min="1" required><br><br>
+        `;
+        
+        // Adicione o novo elemento ao contêiner de ingredientes
+        container.appendChild(ingredientDiv);
     }
-    </script>
-        <script src="{{ url_for('static', filename='popupEstoque.js') }}"></script>
-        <script>
-          // Função para adicionar um campo de ingrediente
-          function addIngredient() {
-              var container = document.getElementById("ingredient-container");
-              
-              // Crie um novo elemento <div> para o campo de ingrediente
-              var ingredientDiv = document.createElement("div");
-              
-              // Adicione o campo de ingrediente ao novo elemento
-              ingredientDiv.innerHTML = `
-                  <label for="operation">Ingrediente:</label><br>
-                  <select id="operation" name="operation">
-                    <option value="1">Arroz</option>
-                    <option value="2">Feijão</option>
-                    <option value="3">Alho</option>
-                    <option value="4">Linguiça Calabresa</option>
-                  </select><br>
-                  
-                  <label for="quantity">Quantidade:</label><br>
-                  <input type="number" name="quantity" min="1" required><br><br>
-              `;
-              
-              // Adicione o novo elemento ao contêiner de ingredientes
-              container.appendChild(ingredientDiv);
-          }
-      
-          // Adicione um ouvinte de evento ao botão "+" para chamar a função quando for clicado
-          document.getElementById("add-ingredient").addEventListener("click", addIngredient);
-      </script>
-      
-</body>
 
- 
+    // Adicione um ouvinte de evento ao botão "+" para chamar a função quando for clicado
+    document.getElementById("add-ingredient").addEventListener("click", addIngredient);
+</script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
-
-</body>
-</html>
+    {% endblock conteudo %}

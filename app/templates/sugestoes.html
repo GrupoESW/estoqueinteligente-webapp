@@ -1,180 +1,111 @@
-<!DOCTYPE html>
-<!-- Created by CodingLab |www.youtube.com/CodingLabYT-->
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="UTF-8">
-    <title>Sugestões | Dispensa Inteligente</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
-    <!-- Boxicons CDN Link -->
-     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-   </head>
-<body>
-{% include 'menu.html' %}
-  <section class="home-section">
-    
-</div>
-  <div class="text">
-    <h1 class="texto-colorido">Dashboard</h1>
-  </div>
-  <div class="text">
-    <p class="text">Transformando desperdício em delícias: Controle seu estoque!</p>
-    <span class="notification">2</span>
-  </div>
-    <div class="panels"> 
-      <button class="botoes" id="inserePopupOpen">Gerar nova sugestão</button>
-    </div>
-    <div id="popup" class="popup">
-        <div class="popup-content">
-            <span id="inserePopupClose" class="close-button">&times;</span>
-            <form id="stock-operation">
-              <label for="operation">Baseada em:</label><br>
-              <select id="operation" name="operation" onchange="showSelectContainers()">
-                <option value="">Selecione uma opção</option>
-                <option value="ingrediente">Ingrediente específico</option>
-                <option value="validade">Mais próximo do vencimento</option>
-                <option value="tipo">Tipo de refeição</option>
-              </select><br>
+{% extends 'base.html' %}
 
- <!-- Campo de seleção secundária oculto por padrão -->
- <div id="second-select-container" style="display: none;">
-  <label for="second-operation">Ingrediente:</label><br>
-  <select id="second-operation" name="second-operation">
-    <option value="">Selecione uma opção</option>
-    <option value="1">Arroz</option>
-    <option value="2">Feijão</option>
-    <option value="3">Alho</option>
-    <option value="4">Linguiça Calabresa</option>
-  </select><br>
+{% block conteudo %} 
+<div class="panels"> 
+  <button class="botoes" id="inserePopupOpen">Gerar nova sugestão</button>
+</div>
+<div id="popup" class="popup">
+    <div class="popup-content">
+        <span id="inserePopupClose" class="close-button">&times;</span>
+        <form id="stock-operation">
+          <label for="operation">Baseada em:</label><br>
+          <select id="operation" name="operation" onchange="showSelectContainers()">
+            <option value="">Selecione uma opção</option>
+            <option value="ingrediente">Ingrediente específico</option>
+            <option value="validade">Mais próximo do vencimento</option>
+            <option value="tipo">Tipo de refeição</option>
+          </select><br>
+
+<!-- Campo de seleção secundária oculto por padrão -->
+<div id="second-select-container" style="display: none;">
+<label for="second-operation">Ingrediente:</label><br>
+<select id="second-operation" name="second-operation">
+<option value="">Selecione uma opção</option>
+<option value="1">Arroz</option>
+<option value="2">Feijão</option>
+<option value="3">Alho</option>
+<option value="4">Linguiça Calabresa</option>
+</select><br>
 </div>
 
- <!-- Campo de seleção terciária oculto por padrão -->
- <div id="third-select-container" style="display: none;">
-  <label for="third-operation">Refeição:</label><br>
-  <select id="third-operation" name="third-operation">
-    <option value="">Selecione uma opção</option>
-    <option value="1">Lanche</option>
-    <option value="2">Almoço</option>
-    <option value="3">Jantar</option>
-  </select><br>
+<!-- Campo de seleção terciária oculto por padrão -->
+<div id="third-select-container" style="display: none;">
+<label for="third-operation">Refeição:</label><br>
+<select id="third-operation" name="third-operation">
+<option value="">Selecione uma opção</option>
+<option value="1">Lanche</option>
+<option value="2">Almoço</option>
+<option value="3">Jantar</option>
+</select><br>
 </div>
-              
-              <input type="submit" value="Executar">
-            </form>
-        </div>
+          
+          <input type="submit" value="Executar">
+        </form>
     </div>
-    <div class="panels">
+</div>
+<div class="panels">
 <br><br><br><br>
-    <div class="panel">
-      <a href="">
-        <div class="panel-title">Aprenda técnicas de armazenamento de vegetais!</div>
-        <div class="panel-value"></div>
-      </a>
-    </div>
-  
-    <div class="panel">
-      <a href="/receitas">
-        <div class="panel-title">FAÇA UMA FEIJOADA E EVITE DESPERDÍCIO!</div>
-        <div class="panel-value"></div>
-      </a>
-    </div>
-  
-    <div class="panel">
-      <a href="https://linkfalso.com/">
-        <div class="panel-title">Aprenda a aproveitar as cascas dos alimentos!</div>
-        <div class="panel-value"></div>
-      </a>
-    </div>
-  
-    <div class="panel">
-      <a href="https://linkfalso.com/">
-        <div class="panel-title">Aprenda a aproveitar as sementes dos vegetais!</div>
-        <div class="panel-value"></div>
-      </a>
-    </div>
-  <br>
-    <div class="panel">
-      <a href="https://linkfalso.com/">
-        <div class="panel-title">    Aprenda a armazenar corretamente suas proteínas e ganhe tempo de validade!</div>
-        <div class="panel-value"></div>
-      </a>
-    </div>
+<div class="panel">
+  <a href="">
+    <div class="panel-title">Aprenda técnicas de armazenamento de vegetais!</div>
+    <div class="panel-value"></div>
+  </a>
+</div>
 
+<div class="panel">
+  <a href="/receitas">
+    <div class="panel-title">FAÇA UMA FEIJOADA E EVITE DESPERDÍCIO!</div>
+    <div class="panel-value"></div>
+  </a>
+</div>
+
+<div class="panel">
+  <a href="https://linkfalso.com/">
+    <div class="panel-title">Aprenda a aproveitar as cascas dos alimentos!</div>
+    <div class="panel-value"></div>
+  </a>
+</div>
+
+<div class="panel">
+  <a href="https://linkfalso.com/">
+    <div class="panel-title">Aprenda a aproveitar as sementes dos vegetais!</div>
+    <div class="panel-value"></div>
+  </a>
+</div>
+<br>
+<div class="panel">
+  <a href="https://linkfalso.com/">
+    <div class="panel-title">    Aprenda a armazenar corretamente suas proteínas e ganhe tempo de validade!</div>
+    <div class="panel-value"></div>
+  </a>
+</div>
+
+
+</div>
 
   </div>
-
-      </div>
-
-    <div class="container">
-       <div class="footer">
-          <footer class="bg-light text-center text-white">
-        <!-- Grid container -->
-        <div class="container p-4 pb-0">
-          <!-- Section: Social media -->
-          <section class="mb-4"></section>
-            <!-- Facebook -->
-            
-<!-- Copyright
-        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-          © 2023 Copyright
-          <a class="text-white" href="#"></a>
-        </div>
- Copyright -->
-      </footer>
-  </div>
-  </section>
   <script>
-    let sidebar = document.querySelector(".sidebar");
-    let closeBtn = document.querySelector("#btn");
-    let searchBtn = document.querySelector(".bx-search");
-  
-    closeBtn.addEventListener("click", ()=>{
-      sidebar.classList.toggle("open");
-      menuBtnChange();//calling the function(optional)
-    });
-  
-    // following are the code to change sidebar button(optional)
-    function menuBtnChange() {
-     if(sidebar.classList.contains("open")){
-       closeBtn.classList.replace("bx-menu", "bx-menu-alt-right","texto-colorido");//replacing the iocns class
-     }else {
-       closeBtn.classList.replace("bx-menu-alt-right","bx-menu","texto-colorido");//replacing the iocns class
-     }
+    // Função para mostrar ou ocultar os campos de seleção com base na seleção do primeiro select
+    function showSelectContainers() {
+        var firstSelect = document.getElementById("operation");
+        var secondSelectContainer = document.getElementById("second-select-container");
+        var thirdSelectContainer = document.getElementById("third-select-container");
+
+        // Verifique a seleção no primeiro select
+        if (firstSelect.value === "tipo") {
+            // Se "tipo" foi selecionado, mostre o segundo e terceiro select
+            secondSelectContainer.style.display = "none";
+            thirdSelectContainer.style.display = "block";
+        } else if (firstSelect.value === "ingrediente") {
+            // Se "ingrediente" foi selecionado, mostre apenas o segundo select
+            secondSelectContainer.style.display = "block";
+            thirdSelectContainer.style.display = "none";
+        } else {
+            // Se nenhuma das opções acima foi selecionada, oculte ambos os selects
+            secondSelectContainer.style.display = "none";
+            thirdSelectContainer.style.display = "none";
+        }
     }
-    </script>
-        <script src="{{ url_for('static', filename='popupEstoque.js') }}"></script>
-
-        <script>
-          // Função para mostrar ou ocultar os campos de seleção com base na seleção do primeiro select
-          function showSelectContainers() {
-              var firstSelect = document.getElementById("operation");
-              var secondSelectContainer = document.getElementById("second-select-container");
-              var thirdSelectContainer = document.getElementById("third-select-container");
-      
-              // Verifique a seleção no primeiro select
-              if (firstSelect.value === "tipo") {
-                  // Se "tipo" foi selecionado, mostre o segundo e terceiro select
-                  secondSelectContainer.style.display = "none";
-                  thirdSelectContainer.style.display = "block";
-              } else if (firstSelect.value === "ingrediente") {
-                  // Se "ingrediente" foi selecionado, mostre apenas o segundo select
-                  secondSelectContainer.style.display = "block";
-                  thirdSelectContainer.style.display = "none";
-              } else {
-                  // Se nenhuma das opções acima foi selecionada, oculte ambos os selects
-                  secondSelectContainer.style.display = "none";
-                  thirdSelectContainer.style.display = "none";
-              }
-          }
-      </script>
-
-</body>
-
- 
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
-
-</body>
-</html>
+</script>
+  <script src="{{ url_for('static', filename='popupEstoque.js') }}"></script>
+    {% endblock conteudo %}

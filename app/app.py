@@ -4,36 +4,40 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    api_url = os.environ.get('LETSENCRYPT_HOST').replace('webapp', 'api')
-    return render_template('login.html', api_url=api_url)
+    #api_url = os.environ.get('LETSENCRYPT_HOST').replace('webapp', 'api')
+    title = "Login"
+    return render_template('login.html', api_url=api_url,title=title)
 
 @app.route('/login')
 def login():
-    return render_template('login.html')
+    #api_url = os.environ.get('LETSENCRYPT_HOST').replace('webapp', 'api')
+    title = "Login" 
+    return render_template('login.html',title=title)
 
 @app.route('/dashboard')
 def dashboard():
-    return render_template('dash.html')
+    title = "Dashboard" 
+    return render_template('dash.html',title=title)
 
 @app.route('/estoque')
 def estoque():
-    return render_template('estoque.html')
+    title = "Estoque" 
+    return render_template('estoque.html',title=title)
 
 @app.route('/receitas')
 def receitas():
-    return render_template('receitas.html')
+    title = "Receitas" 
+    return render_template('receitas.html',title=title)
 
 @app.route('/sugestoes')
 def sugestoes():
-    return render_template('sugestoes.html')
-
-@app.route('/alertas')
-def alertas():
-    return render_template('alertas.html')
+    title = "Sugestões" 
+    return render_template('sugestoes.html',title=title)
 
 @app.route('/config')
 def config():
-    return render_template('configs.html')
+    title = "Configurações" 
+    return render_template('configs.html',title=title)
 
 if __name__ == '__main__':
     port_number = 80

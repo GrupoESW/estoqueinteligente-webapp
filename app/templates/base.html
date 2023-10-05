@@ -5,122 +5,26 @@
     <title>{{ title }} | Dispensa Inteligente</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
     <!-- Boxicons CDN Link -->
-     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>    
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>    
     </head>
-<body>
+  <body>
+    {% include 'menu.html' %}
 
-  {% include 'menu.html' %}
-
-  <section class="home-section">
-
-</div>
-  <div class="text">
-    <h1 class="texto-colorido">{{ title }}</h1>
-  </div>
-  <div class="text">
-    <p class="text">Transformando desperdício em delícias: Controle seu estoque!</p>
-    <span class="notification">2</span>
-  </div>
-  <div class="panels">
-  <div class="panel">
-    <div class="panel-title">Ingredientes vencendo:</div>
-    <div class="panel-value">4</div>
-  </div>
-  
-  <div class="panel">
-    <div class="panel-title">Sugestões:</div>
-    <br><div class="panel-value">3</div>
-  </div>
-
-  <div class="panel">
-    <div class="panel-title">Receitas cadastradas:</div>
-    <div class="panel-value">5</div>
-  </div>
-</div>
-<div class="table">
-      <table class="rounded-table">
-        <thead>
-           <tr>
-              <th>Nome</th>
-              <th>Quantidade</th>
-              <th>Dias para vencer</th>
-              <th>Sugestões</th>
-           </tr>
-        </thead>
-        <tbody>
-           <tr>
-              <td>Feijão</td>
-              <td>500g</td>
-              <td>5</td>
-              <td>Fazer feijoada</td>
-           </tr>
-           <tr>
-              <td>Linguiça Calabresa</td>
-              <td>1kg</td>
-              <td>6</td>
-              <td>Fazer feijoada</td>
-           </tr>
-           <tr>
-            <td>Alho</td>
-            <td>100g</td>
-            <td>10</td>
-            <td>Fazer feijoada ou risoto</td>
-         </tr>
-         <tr>
-            <td>Arroz</td>
-            <td>1kg</td>
-            <td>11</td>
-            <td>Fazer risoto</td>
-         </tr>
-        </tbody>
-      </table>
-
-    </div>
-
-
+    <section class="home-section">
+      <div class="text">
+        <h1 class="texto-colorido">{{ title }}</h1>
       </div>
 
-    <div class="container">
-       <div class="footer">
-          <footer class="bg-light text-center text-white">
-        <!-- Grid container -->
-        <div class="container p-4 pb-0">
-          <!-- Section: Social media -->
-          <section class="mb-4"></section>
-            <!-- Facebook -->
-            
-<!-- Copyright
-        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-          © 2023 Copyright
-          <a class="text-white" href="#"></a>
-        </div>
- Copyright -->
-      </footer>
-  </div>
-  </section>
-  <script>
-    let sidebar = document.querySelector(".sidebar");
-    let closeBtn = document.querySelector("#btn");
-    let searchBtn = document.querySelector(".bx-search");
-  
-    closeBtn.addEventListener("click", ()=>{
-      sidebar.classList.toggle("open");
-      menuBtnChange();//calling the function(optional)
-    });
-  
-    // following are the code to change sidebar button(optional)
-    function menuBtnChange() {
-     if(sidebar.classList.contains("open")){
-       closeBtn.classList.replace("bx-menu", "bx-menu-alt-right","texto-colorido");//replacing the iocns class
-     }else {
-       closeBtn.classList.replace("bx-menu-alt-right","bx-menu","texto-colorido");//replacing the iocns class
-     }
-    }
-    </script>
-  
-</body>
+      <div class="text">
+        <p class="text">Transformando desperdício em delícias: Controle seu estoque!</p>
+        <span class="notification">2</span>
+      </div>
+    
+    {% block conteudo %}{% endblock conteudo %}
+    </section>
+  </body>
 </html>
