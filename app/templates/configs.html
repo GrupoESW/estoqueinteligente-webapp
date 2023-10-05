@@ -12,82 +12,8 @@
    </head>
 <body>
 
-  <div class="sidebar">
-    
-    <div class="logo-details">
-      
-        <div class="logo_name">&nbsp;&nbsp;&nbsp;DISPENSA INTELIGENTE</div>
-        
-        <i class='bx bx-menu' id="btn" ></i>
-    </div>
-        
-  
-    <ul class="nav-list">
-   <!--  <li>
-          <i class='bx bx-search' ></i>
-         <input type="text" placeholder="Search...">
-         <span class="tooltip">Buscar...</span>
-      </li> -->
+  {% include 'menu.html' %}
 
-
-      <li>
-        <a href="dashboard">
-          <i class='bx bx-grid-alt'></i>
-          <span class="links_name">Dashboard</span>
-        </a>
-         <span class="tooltip">Dashboard</span>
-      </li>
-      <li>
-       <a href="estoque">
-         <i class='bx bx-wallet' ></i>
-         <span class="links_name">Estoque</span>
-       </a>
-       <span class="tooltip">Estoque</span>
-     </li>
-     <li>
-       <a href="receitas">
-         <i class='bx bx-plus-circle' ></i>
-         <span class="links_name">Receitas</span>
-       </a>
-       <span class="tooltip">Receitas</span>
-     </li>
-     <li>
-       <a href="sugestoes">
-         <i class='bx bx-bar-chart-square' ></i>
-         <span class="links_name">Sugestões</span>
-       </a>
-       <span class="tooltip">Sugestões</span>
-     </li>
-     <li>
-       <a href="alertas">
-         <i class='bx bx-atom' ></i>
-         <span class="links_name">Alertas</span>
-       </a>
-       <span class="tooltip">Alertas</span>
-     </li>
-     <li>
-       <a href="config">
-         <i class='bx bx-cog' ></i>
-         <span class="links_name">Configurações</span>
-       </a>
-       <span class="tooltip">Configurações</span>
-     </li>
-
-     <br><br><br><br>
-     
-     
-    
-     <li class="profile">
-         <div class="profile-details">
-           <img src="{{ url_for('static', filename='user.png') }}" alt="profileImg">
-           <div class="name_job">
-             <div class="name">&nbsp;&nbsp;&nbsp; Usuário Fulano</div>
-             <div class="job">&nbsp;&nbsp;&nbsp;Id: 123456789</div>
-           </div>
-         </div>   
-     </li>
-    </ul>
-  </div>
   <section class="home-section">
     
 </div>
