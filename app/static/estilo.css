@@ -5,6 +5,14 @@ body {
     margin: 0 auto;
 }
 
+.pagina-login {
+  background-image: url('/app/Imagens/fundo.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color: #f0f0f0; /* Cor de fundo alternativa, caso a imagem não seja carregada */
+}
+
 .notification {
     position: absolute;
     right: 15px;
