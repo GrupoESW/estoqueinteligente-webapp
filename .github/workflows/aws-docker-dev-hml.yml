@@ -48,3 +48,4 @@ jobs:
                 ${repo}:${branch} && \
             docker rm -f ${repo}_${branch}_b || true
           fi
+          echo "Aplicação exposta em: ${repo/*-/}.dispensainteligente.com.br"
