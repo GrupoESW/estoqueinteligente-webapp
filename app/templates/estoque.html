@@ -1,6 +1,47 @@
 {% extends 'base.html' %}
 
 {% block conteudo %} 
+
+<script>
+  $(document).ready(function(){
+    $("#stock-operation").on('submit', function(event) {
+      event.preventDefault(); 
+      var ing = $("#product").val();
+      var qnt = $("#quantity").val();
+      var operation = $("#operation").val();
+      
+      var url;
+      if(operation === 'add') {
+        url = 'https://{{ api_url }}/ingredientes/add';
+      } else if(operation === 'remove') {
+        url = 'https://{{ api_url }}/ingredientes/remove';
+      } else {
+        alert('Operação desconhecida');
+        return;
+      }
+
+      $.ajax({
+        url: 'https://{{ api_url }}/ingredientes/add',
+        type: 'GET',
+        data: {
+          nome: ing,
+          quantidade: qnt
+        },
+        success: function(response) {
+          if(response == 'OK') {
+            window.location.href = '#';
+          } else {
+              alert('Erro!')
+          }
+        },
+        error: function() {
+          alert('Erro!')
+        }
+      });
+    });
+  });
+</script>    
+
  <div class="panels"> 
     <button class="botoes" id="inserePopupOpen">Editar estoque</button>
   </div>
