@@ -20,12 +20,8 @@
         return;
       }
 
-
-
-const token = localStorage.getItem('jwt');
-if(token) {
     $.ajax({
-        url: 'https://{{ api_url }}/some-endpoint',
+        url: url,
         type: 'GET',
         data: {
           nome: ing,
@@ -42,7 +38,7 @@ if(token) {
           alert('Acesso Negado!')
         }
       });
-  }});
+  });
   });
 </script>    
 
