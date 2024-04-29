@@ -20,8 +20,12 @@
         return;
       }
 
-      $.ajax({
-        url: url,
+
+
+const token = localStorage.getItem('jwt');
+if(token) {
+    $.ajax({
+        url: 'https://{{ api_url }}/some-endpoint',
         type: 'GET',
         data: {
           nome: ing,
@@ -31,14 +35,14 @@
           if(response == 'OK') {
             window.location.href = '#';
           } else {
-              alert(response)
+              alert('Acesso Negado!')
           }
         },
         error: function() {
-          alert(response)
+          alert('Acesso Negado!')
         }
       });
-    });
+  }});
   });
 </script>    
 

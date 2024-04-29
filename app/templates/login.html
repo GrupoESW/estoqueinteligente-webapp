@@ -11,7 +11,7 @@
         event.preventDefault(); 
         var username = $("#cpf").val();
         var password = $("#senha").val();
-      
+
         $.ajax({
           url: 'https://{{ api_url }}/login',
           type: 'GET',
@@ -19,12 +19,17 @@
             cpf: username,
             senha: password
           },
+
           success: function(response) {
-            if(response == 'OK') {
-              window.location.href = '/dashboard';
-            } else {
-                alert('Acesso negado!')
-            }
+    if(response.token) {
+        // Define o cookie
+        document.cookie = "token=" + response.token + ";path=/";
+
+        // Redirecionar usuário
+        window.location.href = '/dashboard';
+    } else {
+        alert('Acesso negado!')
+    }
           },
           error: function() {
             alert('Acesso negado!')
