@@ -21,7 +21,11 @@
           },
 
        success: function(response, status) {
-         if(status == 'success') {
+        if(response.token) {
+            // Armazene o token no local storage
+            localStorage.setItem('jwt', response.token);}
+
+        if(status == 'success') {
              window.location.href = '/dashboard';
          } else {
         alert('Acesso negado!')

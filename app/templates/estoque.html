@@ -20,6 +20,8 @@
         return;
       }
 
+    var token = localStorage.getItem('jwt'); // Obtenha o token do localStorage
+
     $.ajax({
         url: url,
         type: 'GET',
@@ -27,6 +29,9 @@
           nome: ing,
           quantidade: qnt
         },
+        headers: {
+        'Authorization': 'Bearer ' + token, // Adicione o token ao cabeçalho de autorização
+    },
         xhrFields: {
         withCredentials: true
         },
