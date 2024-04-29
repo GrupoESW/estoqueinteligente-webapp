@@ -27,6 +27,9 @@
           nome: ing,
           quantidade: qnt
         },
+        xhrFields: {
+        withCredentials: true
+        },
         success: function(response) {
           if(response == 'OK') {
             window.location.href = '#';
