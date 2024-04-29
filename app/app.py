@@ -21,8 +21,9 @@ def dashboard():
 
 @app.route('/estoque')
 def estoque():
+    api_url = os.environ.get('LETSENCRYPT_HOST').replace('webapp', 'apinode')
     title = "Estoque" 
-    return render_template('estoque.html',title=title)
+    return render_template('estoque.html',api_url=api_url,title=title)
 
 @app.route('/receitas')
 def receitas():
