@@ -20,13 +20,9 @@
             senha: password
           },
 
-        success: function(response) {
-        if(response.token) {
-        // Define o cookie
-        document.cookie = "token=" + response.token + ";path=/";
-
-        // Redirecionar usuário
-        window.location.href = '/dashboard';
+       success: function(response, status) {
+         if(status == 'success') {
+             window.location.href = '/dashboard';
          } else {
         alert('Acesso negado!')
          }
