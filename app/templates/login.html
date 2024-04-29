@@ -23,11 +23,11 @@
             if(response == 'OK') {
               window.location.href = '/dashboard';
             } else {
-              alert("Acesso negado!");
+                window.location.href = '#';
             }
           },
           error: function() {
-            alert("Acesso negado!");
+            window.location.href = '#';
           }
         });
       });
