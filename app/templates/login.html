@@ -3,6 +3,36 @@
 <head>
 <title>Dispensa inteligente</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='estilo.css') }}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function(){
+      $("#form-login").on('submit', function(event) {
+        event.preventDefault(); 
+        var username = $("#cpf").val();
+        var password = $("#senha").val();
+      
+        $.ajax({
+          url: 'https://deploy.apinode.dispensainteligente.com.br/login',
+          type: 'GET',
+          data: {
+            cpf: username,
+            senha: password
+          },
+          success: function(response) {
+            if(response == 'OK') {
+              window.location.href = '/dashboard';
+            } else {
+              alert(response);
+            }
+          },
+          error: function() {
+            alert(response);
+          }
+        });
+      });
+    });
+</script>    
 </head>
 
 <body class="pagina-login">
@@ -10,14 +40,16 @@
 <div class="container">
     <label class="title">Dispensa Inteligente</label>
 <br><br>
+<form id="form-login" action="#" method="get">
+
     <label for="uname"><b>Usuário</b></label>
-    <input type="text" placeholder="Insira o seu usuário" name="uname" required>
+    <input type="text" placeholder="Insira o seu usuário" name=cpf id=cpf required>
 
     <label for="psw"><b>Senha</b></label>
-    <input type="password" placeholder="Insira a sua senha" name="psw" required>
+    <input type="password" placeholder="Insira a sua senha" name="senha" id="senha" required>
 
     <a href="/dashboard"><button type="submit" class="btn">LOGIN DEMO</button></a>
-
+</form>
     <button class="btn btn-social">Login com Facebook</button>
     <button class="btn btn-social">Login com Google</button>
 </div>
