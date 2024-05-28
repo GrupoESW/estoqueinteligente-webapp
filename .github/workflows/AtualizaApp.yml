@@ -1,0 +1,100 @@
+name: Atualiza container
+on:
+  push:
+    branches: [ '**' ]
+  pull_request:
+    branches: [ '**' ]
+
+  workflow_dispatch:
+    
+env:
+  PORTA: 8081
+
+jobs:
+  build-base:
+    runs-on: local
+    outputs:
+      output1: ${{ steps.build-base.outputs.workflows }}
+    steps:
+    - uses: actions/checkout@v4
+    - uses: dorny/paths-filter@v3
+      id: build-base
+      with:
+        filters: |
+          workflows:
+            - 'package.json'
+            - 'package-lock.json'
+            - 'Dockerfile.base'
+    - name: Cria Variáveis
+      id: create_variables
+      continue-on-error: true
+      run: |
+          branch=${{ github.ref }}
+          branch=${branch/refs\/heads\//}
+          repo=${{ github.repository }}
+          repo=${repo/*\//}
+          repo=${repo,,} # converte o nome do repositório para minúsculo
+
+          echo $branch | tee branch.txt
+          echo $repo | tee repo.txt
+            
+    - name: Constrói imagem base
+      if: steps.build-base.outputs.workflows == 'true'
+      run: |
+        branch=$(cat branch.txt)
+        repo=$(cat repo.txt)
+
+        echo "MONGO_URL=${{ secrets.MONGODB_URI }}" > .env
+        docker build -t ${repo}:base -f Dockerfile.base .
+    
+  build-e-run:
+    runs-on: local
+    needs: build-base
+    if: always()
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Cria Variáveis
+      id: create_variables
+      continue-on-error: true
+      run: |
+          branch=${{ github.ref }}
+          branch=${branch/refs\/heads\//}
+          repo=${{ github.repository }}
+          repo=${repo/*\//}
+          repo=${repo,,} # converte o nome do repositório para minúsculo
+
+          echo $branch | tee branch.txt
+          echo $repo | tee repo.txt
+            
+    - name: Atualiza imagem do app
+      id: change_image
+      run: |
+        branch=$(cat branch.txt)
+        repo=$(cat repo.txt)
+
+        sed -i "s/FROM REPO:base/FROM ${repo}:base/g" Dockerfile
+        echo "MONGO_URL=${{ secrets.MONGODB_URI }}" > .env
+        docker build -t ${repo}:${branch} -f Dockerfile .
+    
+        if docker inspect "${repo}_${branch}_a" >/dev/null 2>&1; then
+          docker run -d \
+              --name ${repo}_${branch}_b \
+              --network nginx-proxy \
+              -e "VIRTUAL_HOST=${branch}.${repo/*-/}.dispensainteligente.com.br" \
+              ${repo}:${branch}
+              #-e "LETSENCRYPT_HOST=${branch}.${repo/*-/}.dispensainteligente.com.br" \
+          docker rm -f ${repo}_${branch}_a || true
+        else
+          docker run -d \
+              --name ${repo}_${branch}_a \
+              --network nginx-proxy \
+              -e "VIRTUAL_HOST=${branch}.${repo/*-/}.dispensainteligente.com.br" \
+              ${repo}:${branch}
+              #-e "LETSENCRYPT_HOST=${branch}.${repo/*-/}.dispensainteligente.com.br" \
+          docker rm -f ${repo}_${branch}_b || true
+        fi
+        echo "Aplicação exposta em: ${branch}.${repo/*-/}.dispensainteligente.com.br"
+
+
+

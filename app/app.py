@@ -4,13 +4,13 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    api_url = os.environ.get('LETSENCRYPT_HOST').replace('webapp', 'apinode')
+    api_url = os.environ.get('VIRTUAL_HOST').replace('webapp', 'apinode')
     title = "Login"
     return render_template('login.html', api_url=api_url,title=title)
 
 @app.route('/login')
 def login():
-    api_url = os.environ.get('LETSENCRYPT_HOST').replace('webapp', 'apinode')
+    api_url = os.environ.get('VIRTUAL_HOST').replace('webapp', 'apinode')
     title = "Login" 
     return render_template('login.html', api_url=api_url,title=title)
 
@@ -21,7 +21,7 @@ def dashboard():
 
 @app.route('/estoque')
 def estoque():
-    api_url = os.environ.get('LETSENCRYPT_HOST').replace('webapp', 'apinode')
+    api_url = os.environ.get('VIRTUAL_HOST').replace('webapp', 'apinode')
     title = "Estoque" 
     return render_template('estoque.html',api_url=api_url,title=title)
 
