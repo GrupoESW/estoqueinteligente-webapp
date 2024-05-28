@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     
 env:
-  PORTA: 8081
+  PORTA: 8080
 
 jobs:
   build-base:
