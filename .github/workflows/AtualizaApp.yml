@@ -48,7 +48,7 @@ jobs:
   build-e-run:
     runs-on: local
     needs: build-base
-    if: always()
+    if: !cancelled() && (success() || failure())
     steps:
     - uses: actions/checkout@v3
 
