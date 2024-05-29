@@ -12,7 +12,7 @@ env:
 
 jobs:
   build-base:
-    runs-on: self-hosted
+    runs-on: local
     outputs:
       output1: ${{ steps.build-base.outputs.workflows }}
     steps:
@@ -46,7 +46,7 @@ jobs:
         docker build -t ${repo}:base -f Dockerfile.base .
     
   build-e-run:
-    runs-on: self-hosted
+    runs-on: local
     needs: build-base
     if: (success() || failure())
     steps:
