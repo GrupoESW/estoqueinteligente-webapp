@@ -81,6 +81,7 @@ jobs:
           docker run -d \
               --name ${repo}_${branch}_b \
               --network nginx-proxy \
+              --restart always \
               -e "VIRTUAL_HOST=${branch}.${repo/*-/}.dispensainteligente.com.br" \
               ${repo}:${branch}
               #-e "LETSENCRYPT_HOST=${branch}.${repo/*-/}.dispensainteligente.com.br" \
@@ -89,6 +90,7 @@ jobs:
           docker run -d \
               --name ${repo}_${branch}_a \
               --network nginx-proxy \
+              --restart always \
               -e "VIRTUAL_HOST=${branch}.${repo/*-/}.dispensainteligente.com.br" \
               ${repo}:${branch}
               #-e "LETSENCRYPT_HOST=${branch}.${repo/*-/}.dispensainteligente.com.br" \
