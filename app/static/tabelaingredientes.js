@@ -1,20 +1,4 @@
-<div class="table">
-    <table class="rounded-table">
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Quantidade</th>
-                <th>Validade</th>
-                <th>Sugestões</th>
-            </tr>
-        </thead>
-        <tbody id="table-body">
-            <!-- Conteúdo dinâmico será inserido aqui -->
-        </tbody>
-    </table>
-</div>
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
     // URL da API
     const apiUrl = 'http://{{ api_url }}/ingredientes/list';
 
@@ -63,4 +47,3 @@
     // Chama a função para popular a tabela
     populateTable();
 });
-</script>

@@ -22,17 +22,17 @@ def dashboard():
 @app.route('/estoque')
 def estoque():
     api_url = os.environ.get('VIRTUAL_HOST').replace('webapp', 'apinode')
-    title = "Estoque" 
+    title = "Estoque"
     return render_template('estoque.html',api_url=api_url,title=title)
 
 @app.route('/receitas')
 def receitas():
-    title = "Receitas" 
+    title = "Receitas"
     return render_template('receitas.html',title=title)
 
 @app.route('/sugestoes')
 def sugestoes():
-    title = "Sugestões" 
+    title = "Sugestões"
     return render_template('sugestoes.html',title=title)
 
 @app.route('/config')

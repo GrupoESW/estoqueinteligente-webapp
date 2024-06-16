@@ -13,7 +13,7 @@
         var password = $("#senha").val();
 
         $.ajax({
-          url: 'https://{{ api_url }}/login',
+          url: 'http://{{ api_url }}/login',
           type: 'GET',
           data: {
             cpf: username,
@@ -43,7 +43,7 @@
 <body class="pagina-login">
 
 <div class="container">
-    <label class="title">Dispensa Inteligente</label>
+    <label class="title">Dispensa Inteligente.</label>
 <br><br>
 <form id="form-login" action="#" method="get">
 

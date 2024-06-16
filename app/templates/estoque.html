@@ -8,13 +8,16 @@
       event.preventDefault(); 
       var ing = $("#product").val();
       var qnt = $("#quantity").val();
+      var unid = $("#unid").val();
+      var validade = $("#validade").val();
+
       var operation = $("#operation").val();
       
       var url;
       if(operation === 'add') {
-        url = 'https://{{ api_url }}/ingredientes/add';
+        url = 'http://{{ api_url }}/ingredientes/add';
       } else if(operation === 'remove') {
-        url = 'https://{{ api_url }}/ingredientes/remove';
+        url = 'http://{{ api_url }}/ingredientes/remove';
       } else {
         alert('Operação desconhecida');
         return;
@@ -27,7 +30,9 @@
         type: 'GET',
         data: {
           nome: ing,
-          quantidade: qnt
+          quantidade: qnt,
+          unidade: unid,
+          validade: validade
         },
         headers: {
         'Authorization': 'Bearer ' + token, // Adicione o token ao cabeçalho de autorização
@@ -60,6 +65,12 @@
             <label for="quantity">Quantidade:</label><br>
             <input type="number" id="quantity" name="quantity" min="1" required><br>
             
+            <label for="unid">Unidade:</label><br>
+            <input type="text" id="unid" name="unid" required><br>
+
+            <label for="validade">Validade:</label><br>
+            <input type="date" id="validade" name="validade" required><br>
+
             <label for="operation">Operação:</label><br>
             <select id="operation" name="operation">
               <option value="add">Adicionar ao estoque</option>
