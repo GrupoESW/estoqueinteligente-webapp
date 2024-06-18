@@ -12,7 +12,15 @@
       var validade = $("#validade").val();
 
       var operation = $("#operation").val();
-      
+    
+      // Converte a data para o formato dd/mm/aaaa
+      const dateValue = validade; // valor no formato aaaa-mm-dd
+      if (dateValue) {
+          const [year, month, day] = dateValue.split('-');
+          const formattedDate = `${day}/${month}/${year}`;
+          validade = formattedDate;
+      }
+
       var url;
       if(operation === 'add') {
         url = 'http://{{ api_url }}/ingredientes/add';
@@ -38,11 +46,7 @@
         'Authorization': 'Bearer ' + token, // Adicione o token ao cabeçalho de autorização
     },
         success: function(response) {
-          if(response == 'OK') {
-            window.location.href = '#';
-          } else {
-              alert('Acesso Negado!')
-          }
+          location.href = location.href;
         },
         error: function() {
           alert('Acesso Negado!! ' + url + ' ' + ing + ' ' + qnt)
@@ -63,13 +67,13 @@
             <input type="text" id="product" name="product" required><br>
             
             <label for="quantity">Quantidade:</label><br>
-            <input type="number" id="quantity" name="quantity" min="1" required><br>
+            <input type="number" id="quantity" name="quantity" min="0" value="0" required><br>
             
             <label for="unid">Unidade:</label><br>
-            <input type="text" id="unid" name="unid" required><br>
+            <input type="text" id="unid" name="unid" value="kg" required><br>
 
             <label for="validade">Validade:</label><br>
-            <input type="date" id="validade" name="validade" required><br>
+            <input type="date" id="validade" name="validade" value="2024-06-20" required><br>
 
             <label for="operation">Operação:</label><br>
             <select id="operation" name="operation">

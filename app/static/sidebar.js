@@ -10,7 +10,7 @@ function openNav() {
   
   $(document).ready(function(){
     $("#apiButton").click(function(){
-      $.get("https://dev.apinode.dispensainteligente.com.br/example", function(data, status){
+      $.get("http://dev.apinode.dispensainteligente.com.br/example", function(data, status){
         alert("Data: " + data + "\nStatus: " + status);
       });
     });

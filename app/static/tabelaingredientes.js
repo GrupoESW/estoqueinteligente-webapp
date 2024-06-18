@@ -13,9 +13,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const quantityCell = document.createElement('td');
         quantityCell.textContent = `${data.quantidade} ${data.unidade}`;
         row.appendChild(quantityCell);
+
+        const dateValue = data.validade; // valor no formato aaaa-mm-dd
+        const [year, month, day] = dateValue.split('-');
+        const formattedDate = `${day}/${month}/${year}`;
         
+
         const validadeCell = document.createElement('td');
-        validadeCell.textContent = data.validade;
+        validadeCell.textContent = formattedDate;
         row.appendChild(validadeCell);
         
         const suggestionCell = document.createElement('td');
