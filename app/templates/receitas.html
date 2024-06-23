@@ -12,52 +12,22 @@
           <input type="text" id="product" name="product" required><br><br>
           <label for="prepar">Modo de preparo:</label><br>
           <input type="text" id="prepar" name="prepar" required><br><br>
-
-          <div id="ingredient-container">
-          <label for="operation">Ingrediente:</label><br>
-          <select id="operation" name="operation">
-            <option value="0">Adicionar novo ingrediente</option>
-            <option value="1">Arroz</option>
-            <option value="2">Feijão</option>
-            <option value="3">Alho</option>
-            <option value="4">Linguiça Calabresa</option>
-          </select><br>
-          
-          <label for="quantity">Quantidade:</label><br>
-          <input type="number" id="quantity" name="quantity" min="1" required><br><br>
+        <div id="ingredients-container">
+          <div class="ingredient">
+            <div id="ingredient-container">
+              <label for="ingredient-name-0">Ingrediente:</label><br>
+              <input type="text" id="ingredient-name-0" name="ingredients[0][name]" required><br>
+              <label for="ingredient-quantity-0">Quantidade:</label><br>
+              <input type="number" id="ingredient-quantity-0" name="ingredients[0][quantity]" min="1" required><br>
+          </div>
+      </div>
+      <input type="button" value="+" id="add-ingredient"><br><br>
+      <input type="submit" value="Executar">
         </div>
-          <input type="button" value="+" id="add-ingredient"><br><br>
-          <input type="submit" value="Executar">
-        </form>
+  </form>
       </div>
       </div>
-<div class="table">
-    <table class="rounded-table">
-      <thead>
-         <tr>
-            <th>Nome</th>
-            <th>Ingredientes usados</th>
-            <th>Preparo</th>
-         </tr>
-      </thead>
-      <tbody>
-         <tr>
-            <td>Feijoada</td>
-            <td>Feijão (500g), Alho (3 dentes), sal (1 colher de chá) e Linguiça Calabresa (300g)</td>
-            <td>Cozinhe o feijão e a linguiça junto, refogue o alho e tempere com sal, adicione o feijão cozido.</td>
-         </tr>
-         <tr>
-            <td>Risoto</td>
-            <td>Arroz (1 copo de 200ml), Água (1L), Proteína (200g), alho poró(100g)</td>
-            <td>Coloque a água para ferver e enquanto isso refogue o alho poró junto com a proteína, depois adicione sal e o arroz, refogue mais um pouco e adicione a água fervendo aos poucos, não jogue a água toda, vá adicionando aos poucos.</td>
-         </tr>
-         </tbody>
-    </table>
-
-  </div>
-
-
-    </div>
+    {% include "tabela-receitas.html" %}
 
   <script src="{{ url_for('static', filename='popupEstoque.js') }}"></script>
   <script>
@@ -70,8 +40,8 @@
         
         // Adicione o campo de ingrediente ao novo elemento
         ingredientDiv.innerHTML = `
-            <label for="operation">Ingrediente:</label><br>
-            <select id="operation" name="operation">
+            <label for="ing">Ingrediente:</label><br>
+            <select id="ing" name="ing">
               <option value="1">Arroz</option>
               <option value="2">Feijão</option>
               <option value="3">Alho</option>

@@ -28,8 +28,9 @@ def estoque():
 
 @app.route('/receitas')
 def receitas():
+    api_url = os.environ.get('VIRTUAL_HOST').replace('webapp', 'apinode')
     title = "Receitas"
-    return render_template('receitas.html',title=title)
+    return render_template('receitas.html',api_url=api_url,title=title)
 
 @app.route('/sugestoes')
 def sugestoes():

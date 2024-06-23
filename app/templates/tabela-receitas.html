@@ -1,0 +1,88 @@
+<div class="table">
+    <table class="rounded-table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Ingredientes</th>
+                <th>Modo de preparo</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+            <!-- Conteúdo dinâmico será inserido aqui -->
+        </tbody>
+    </table>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // URL da API
+    const apiUrl = 'http://{{ api_url }}/receitas/list';
+
+    // Função para criar uma linha da tabela
+    function createTableRow(data) {
+        const row = document.createElement('tr');
+        
+        const nameCell = document.createElement('td');
+        nameCell.textContent = data.nome;
+        row.appendChild(nameCell);
+        
+//        const quantityCell = document.createElement('td');
+  //      quantityCell.textContent = data.ingredientes;
+    //    row.appendChild(quantityCell);
+  
+        const ingredientsCell = document.createElement('td');
+        // Transformar a lista de ingredientes em uma string legível
+        const ingredientsText = data.ingredientes.map(ingrediente => 
+            `${ingrediente.nome} \(${ingrediente.quantidade}\)`
+        ).join(', ');
+        ingredientsCell.textContent = ingredientsText;
+        row.appendChild(ingredientsCell);
+
+        const validadeCell = document.createElement('td');
+        validadeCell.textContent = data.preparo;
+        row.appendChild(validadeCell);
+
+        return row;
+    }
+
+
+        // Função para renderizar a tabela de receitas
+ //       function renderTable(receitas) {
+ //           const tableBody = document.querySelector('#receitas-table tbody');
+ //           tableBody.innerHTML = ''; // Limpar conteúdo existente
+
+ //           receitas.forEach(receita => {
+ //               const row = createTableRow(receita);
+ //               tableBody.appendChild(row);
+ //           });
+ //       }
+
+        // Chamada da função para renderizar a tabela de receitas possíveis
+ //        renderTable(receitasPossiveis);
+
+
+
+
+
+
+    // Função para popular a tabela
+    async function populateTable() {
+        try {
+            const response = await fetch(apiUrl);
+            const data = await response.json();
+            
+            const tableBody = document.getElementById('table-body');
+            tableBody.innerHTML = ''; // Limpa a tabela antes de popular
+
+            data.forEach(item => {
+                const tableRow = createTableRow(item);
+                tableBody.appendChild(tableRow);
+            });
+        } catch (error) {
+            console.error('Erro ao buscar dados da API:', error);
+        }
+    }
+
+    // Chama a função para popular a tabela
+    populateTable();
+});
+</script>
