@@ -16,8 +16,9 @@ def login():
 
 @app.route('/dashboard')
 def dashboard():
+    api_url = os.environ.get('VIRTUAL_HOST').replace('webapp', 'apinode')
     title = "Dashboard" 
-    return render_template('dash.html',title=title)
+    return render_template('dash.html',api_url=api_url,title=title)
 
 @app.route('/estoque')
 def estoque():
@@ -37,7 +38,7 @@ def sugestoes():
 
 @app.route('/config')
 def config():
-    title = "Configurações" 
+    title = "Configurações"
     return render_template('configs.html',title=title)
 
 if __name__ == '__main__':
