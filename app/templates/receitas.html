@@ -31,7 +31,7 @@
 
   <script src="{{ url_for('static', filename='popupEstoque.js') }}"></script>
   <script>
-
+ let ingredienteCount = 1
 function renderTable(receitas) {
             const tableBody = document.getElementById('table-body');
             tableBody.innerHTML = '';
@@ -59,7 +59,7 @@ function renderTable(receitas) {
 
 
     document.addEventListener('DOMContentLoaded', function () {
-        let ingredienteCount = 1;
+        //let ingredienteCount = 0;
 
         document.getElementById('add-ingredient').addEventListener('click', () => {
             const container = document.getElementById('ingredientes-container');
@@ -104,69 +104,49 @@ function renderTable(receitas) {
         });
 
         document.getElementById('stock-operation').addEventListener('submit', (e) => {
-            e.preventDefault();
+        e.preventDefault();
 
-            const formData = new FormData(e.target);
-            const receita = {
-                "nome": formData.get('nome'),
-                "preparo": formData.get('preparo'),
-                "ingredientes": Array.from({ length: ingredienteCount }).map((_, i) => ({
-                    "ingredientes": formData.get(`ingredientes[${i}]`),
-                    "quantidade": formData.get(`quantidades[${i}]`)
-                })).filter(ingrediente => ingrediente.nome && ingrediente.quantidade)
-            };
+        const formData = new FormData(e.target);
+        const params = new URLSearchParams();
 
-            console.log('Receita:', receita);
-
-
-            event.preventDefault();
-/*
-            const formData = new FormData(this);
-            const receita = {
-                nome: formData.get('nome'),
-                preparo: formData.get('preparo'),
-                ingredientes: []
-            };
-
-            for (let i = 0; i < ingredienteCount; i++) {
-                const ingrediente = formData.get(`ingredientes[${i}]`);
-                const quantidade = formData.get(`quantidades[${i}]`);
-                if (ingrediente && quantidade) {
-                    receita.ingredientes.push({
-                        nome: ingrediente,
-                        quantidade: quantidade
-                    });
-                }
+        // Adicionando nome e preparo a URLSearchParams
+        params.append('nome', formData.get('nome'));
+        params.append('preparo', formData.get('preparo'));
+        
+        //let i = 0;
+        // Iterando sobre os ingredientes e quantidades
+        for (let i = 0; i < ingredienteCount; i++) {
+                params.append(`ingredientes[${i}]`, formData.get(`ingredientes[${i}]`));
+                //params.append(`ingredientes[${i}]`, 'teste');
+                params.append(`quantidades[${i}]`, formData.get(`quantidades[${i}]`));
             }
-*/
-            const token = localStorage.getItem('jwt');
 
-            $.ajax({
-                url: 'http://{{ api_url }}/receitas/add',
-                type: 'GET',
-                contentType: 'application/json',
-                data: receita,
-                headers: {
-                    'Authorization': 'Bearer ' + token
-                },
-                success: function (response) {
-                    location.href = location.href;
-                },
-                error: function () {
-                    alert('Acesso Negado ao adicionar receita!');
-                }
-            });
+        // Obter o token de autenticação (isso deve ser personalizado conforme seu back-end)
+        const token = localStorage.getItem('jwt');
 
-
-
-
+        // Exemplo de como enviar o objeto params para o backend
+        fetch(`http://{{ api_url }}/receitas/add?${params.toString()}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,  // Inclusão do token no cabeçalho
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).then(response => response.json())
+        .then(data => {
+            console.log(data);
+            // Sucesso na requisição
+            location.href = location.href;  // Redireciona ou atualiza a página
+        })
+        .catch(error => {
+            console.error(error);
+            alert('Acesso Negado ao adicionar receita!');
+        });
+        
+        console.log(params.toString()); // Isso é só para debug
+    });
+});
 
            // renderTable(receitas); // Suponho que já tenha a função renderTable implementada em seu código
-        });
-
-
-    });
-
 </script>
 
     {% endblock conteudo %}
