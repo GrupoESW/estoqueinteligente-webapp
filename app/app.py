@@ -34,8 +34,9 @@ def receitas():
 
 @app.route('/sugestoes')
 def sugestoes():
+    api_url = os.environ.get('VIRTUAL_HOST').replace('webapp', 'apinode')
     title = "Sugestões"
-    return render_template('sugestoes.html',title=title)
+    return render_template('sugestoes.html',api_url=api_url,title=title)
 
 @app.route('/config')
 def config():

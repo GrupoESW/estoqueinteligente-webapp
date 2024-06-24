@@ -9,16 +9,16 @@
         <span id="inserePopupClose" class="close-button">&times;</span>
         <form id="stock-operation">
           <label for="product">Nome da receita:</label><br>
-          <input type="text" id="product" name="product" required><br><br>
+          <input type="text" id="nome" name="nome" required><br><br>
           <label for="prepar">Modo de preparo:</label><br>
-          <input type="text" id="prepar" name="prepar" required><br><br>
+          <input type="text" id="preparo" name="preparo" required><br><br>
         <div id="ingredients-container">
           <div class="ingredient">
             <div id="ingredient-container">
               <label for="ingredient-name-0">Ingrediente:</label><br>
-              <input type="text" id="ingredient-name-0" name="ingredients[0][name]" required><br>
+              <input type="text" id="ingredient-name-0" name="ingredientes[0]" required><br>
               <label for="ingredient-quantity-0">Quantidade:</label><br>
-              <input type="number" id="ingredient-quantity-0" name="ingredients[0][quantity]" min="1" required><br>
+              <input type="number" id="ingredient-quantity-0" name="quantidades[0]" min="1" required><br>
           </div>
       </div>
       <input type="button" value="+" id="add-ingredient"><br><br>
@@ -31,33 +31,135 @@
 
   <script src="{{ url_for('static', filename='popupEstoque.js') }}"></script>
   <script>
-    // Função para adicionar um campo de ingrediente
-    function addIngredient() {
-        var container = document.getElementById("ingredient-container");
-        
-        // Crie um novo elemento <div> para o campo de ingrediente
-        var ingredientDiv = document.createElement("div");
-        
-        // Adicione o campo de ingrediente ao novo elemento
-        ingredientDiv.innerHTML = `
-            <label for="ing">Ingrediente:</label><br>
-            <select id="ing" name="ing">
-              <option value="1">Arroz</option>
-              <option value="2">Feijão</option>
-              <option value="3">Alho</option>
-              <option value="4">Linguiça Calabresa</option>
-            </select><br>
-            
-            <label for="quantity">Quantidade:</label><br>
-            <input type="number" name="quantity" min="1" required><br><br>
-        `;
-        
-        // Adicione o novo elemento ao contêiner de ingredientes
-        container.appendChild(ingredientDiv);
-    }
+    document.addEventListener('DOMContentLoaded', function () {
+        let ingredienteCount = 1;
 
-    // Adicione um ouvinte de evento ao botão "+" para chamar a função quando for clicado
-    document.getElementById("add-ingredient").addEventListener("click", addIngredient);
+        document.getElementById('add-ingredient').addEventListener('click', () => {
+            const container = document.getElementById('ingredientes-container');
+
+            const newRow = document.createElement('div');
+            newRow.className = 'ingrediente-row';
+            newRow.setAttribute('data-index', ingredienteCount);
+
+            const nameLabel = document.createElement('label');
+            nameLabel.htmlFor = `ingredient-name-${ingredienteCount}`;
+            nameLabel.textContent = 'Ingrediente:';
+
+            const ingredienteInput = document.createElement('input');
+            ingredienteInput.type = 'text';
+            ingredienteInput.id = `ingredient-name-${ingredienteCount}`;
+            ingredienteInput.name = `ingredientes[${ingredienteCount}]`;
+            ingredienteInput.required = true;
+
+            const quantityLabel = document.createElement('label');
+            quantityLabel.htmlFor = `ingredient-quantity-${ingredienteCount}`;
+            quantityLabel.textContent = 'Quantidade:';
+
+            const quantidadeInput = document.createElement('input');
+            quantidadeInput.type = 'number';
+            quantidadeInput.id = `ingredient-quantity-${ingredienteCount}`;
+            quantidadeInput.name = `quantidades[${ingredienteCount}]`;
+            quantidadeInput.min = '1';
+            quantidadeInput.required = true;
+
+            newRow.appendChild(nameLabel);
+            newRow.appendChild(document.createElement('br'));
+            newRow.appendChild(ingredienteInput);
+            newRow.appendChild(document.createElement('br'));
+            newRow.appendChild(quantityLabel);
+            newRow.appendChild(document.createElement('br'));
+            newRow.appendChild(quantidadeInput);
+            newRow.appendChild(document.createElement('br'));
+
+            container.appendChild(newRow);
+
+            ingredienteCount++;
+        });
+
+        document.getElementById('receita-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(e.target);
+            const receitas = [{
+                "nome": formData.get('nome'),
+                "preparo": formData.get('preparo'),
+                "ingredientes": Array.from({ length: ingredienteCount }).map((_, i) => ({
+                    "nome": formData.get(`ingredientes[${i}]`),
+                    "quantidade": formData.get(`quantidades[${i}]`)
+                })).filter(ingrediente => ingrediente.nome && ingrediente.quantidade)
+            }];
+
+            console.log('Receita:', receitas[0]);
+
+            renderTable(receitas); // Suponho que já tenha a função renderTable implementada em seu código
+        });
+
+        function renderTable(receitas) {
+            const tableBody = document.querySelector('#receitas-table tbody');
+            tableBody.innerHTML = '';
+
+            receitas.forEach(receita => {
+                const row = document.createElement('tr');
+
+                const nameCell = document.createElement('td');
+                nameCell.textContent = receita.nome;
+                row.appendChild(nameCell);
+
+                const ingredientsCell = document.createElement('td');
+                ingredientsCell.textContent = receita.ingredientes.map(
+                    i => `${i.nome}: ${i.quantidade}`
+                ).join(', ');
+                row.appendChild(ingredientsCell);
+
+                const preparoCell = document.createElement('td');
+                preparoCell.textContent = receita.preparo;
+                row.appendChild(preparoCell);
+
+                tableBody.appendChild(row);
+            });
+        }
+    });
+
+    $(document).ready(function(){
+        $("#stock-operation").on('submit', function(event) {
+            event.preventDefault();
+            const ing = $("#product").val();
+            const qnt = $("#quantity").val();
+
+            var url;
+            if (operation === 'add') {
+                url = 'http://{{ api_url }}/receitas/add';
+            } else if (operation === 'remove') {
+                url = 'http://{{ api_url }}/ingredientes/remove';
+            } else {
+                alert('Operação desconhecida');
+                return;
+            }
+            url = 'http://{{ api_url }}/receitas/add';
+
+            const token = localStorage.getItem('jwt');
+
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data: {
+                    nome: ing,
+                    quantidade: qnt,
+                    unidade: unid,
+                    validade: validade
+                },
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                },
+                success: function(response) {
+                    location.href = location.href;
+                },
+                error: function() {
+                    alert('Acesso Negado!! ' + url + ' ' + ing + ' ' + qnt);
+                }
+            });
+        });
+    });
 </script>
 
     {% endblock conteudo %}

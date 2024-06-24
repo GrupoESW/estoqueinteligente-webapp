@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
 
-{% block conteudo %} 
+{% block conteudo %}
+
 <div class="panels"> 
   <button class="botoes" id="inserePopupOpen">Gerar nova sugestão</button>
 </div>
+{% include "tabela-receitas-possiveis.html" %}
+
 <div id="popup" class="popup">
     <div class="popup-content">
         <span id="inserePopupClose" class="close-button">&times;</span>
@@ -11,9 +14,10 @@
           <label for="operation">Baseada em:</label><br>
           <select id="operation" name="operation" onchange="showSelectContainers()">
             <option value="">Selecione uma opção</option>
-            <option value="ingrediente">Ingrediente específico</option>
+           <!--<option value="ingrediente">Ingrediente específico</option>
             <option value="validade">Mais próximo do vencimento</option>
-            <option value="tipo">Tipo de refeição</option>
+            <option value="tipo">Tipo de refeição</option>-->
+            <option value="emestoque">Em estoque</option>
           </select><br>
 
 <!-- Campo de seleção secundária oculto por padrão -->
@@ -44,7 +48,8 @@
     </div>
 </div>
 <div class="panels">
-<br><br><br><br>
+<br><br><br><br><br><br><br><br>
+
 <div class="panel">
   <a href="">
     <div class="panel-title">Aprenda técnicas de armazenamento de vegetais!</div>
