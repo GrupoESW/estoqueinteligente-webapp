@@ -31,6 +31,33 @@
 
   <script src="{{ url_for('static', filename='popupEstoque.js') }}"></script>
   <script>
+
+function renderTable(receitas) {
+            const tableBody = document.getElementById('table-body');
+            tableBody.innerHTML = '';
+
+            receitas.forEach(receita => {
+                const row = document.createElement('tr');
+
+                const nameCell = document.createElement('td');
+                nameCell.textContent = receita.nome;
+                row.appendChild(nameCell);
+
+                const ingredientsCell = document.createElement('td');
+                ingredientsCell.textContent = receita.ingredientes.map(
+                    i => `${i.nome}: ${i.quantidade}`
+                ).join(', ');
+                row.appendChild(ingredientsCell);
+
+                const preparoCell = document.createElement('td');
+                preparoCell.textContent = receita.preparo;
+                row.appendChild(preparoCell);
+
+                tableBody.appendChild(row);
+            });
+        }
+
+
     document.addEventListener('DOMContentLoaded', function () {
         let ingredienteCount = 1;
 
@@ -76,90 +103,70 @@
             ingredienteCount++;
         });
 
-        document.getElementById('receita-form').addEventListener('submit', (e) => {
+        document.getElementById('stock-operation').addEventListener('submit', (e) => {
             e.preventDefault();
 
             const formData = new FormData(e.target);
-            const receitas = [{
+            const receita = {
                 "nome": formData.get('nome'),
                 "preparo": formData.get('preparo'),
                 "ingredientes": Array.from({ length: ingredienteCount }).map((_, i) => ({
-                    "nome": formData.get(`ingredientes[${i}]`),
+                    "ingredientes": formData.get(`ingredientes[${i}]`),
                     "quantidade": formData.get(`quantidades[${i}]`)
                 })).filter(ingrediente => ingrediente.nome && ingrediente.quantidade)
-            }];
+            };
 
-            console.log('Receita:', receitas[0]);
+            console.log('Receita:', receita);
 
-            renderTable(receitas); // Suponho que já tenha a função renderTable implementada em seu código
-        });
 
-        function renderTable(receitas) {
-            const tableBody = document.querySelector('#receitas-table tbody');
-            tableBody.innerHTML = '';
-
-            receitas.forEach(receita => {
-                const row = document.createElement('tr');
-
-                const nameCell = document.createElement('td');
-                nameCell.textContent = receita.nome;
-                row.appendChild(nameCell);
-
-                const ingredientsCell = document.createElement('td');
-                ingredientsCell.textContent = receita.ingredientes.map(
-                    i => `${i.nome}: ${i.quantidade}`
-                ).join(', ');
-                row.appendChild(ingredientsCell);
-
-                const preparoCell = document.createElement('td');
-                preparoCell.textContent = receita.preparo;
-                row.appendChild(preparoCell);
-
-                tableBody.appendChild(row);
-            });
-        }
-    });
-
-    $(document).ready(function(){
-        $("#stock-operation").on('submit', function(event) {
             event.preventDefault();
-            const ing = $("#product").val();
-            const qnt = $("#quantity").val();
+/*
+            const formData = new FormData(this);
+            const receita = {
+                nome: formData.get('nome'),
+                preparo: formData.get('preparo'),
+                ingredientes: []
+            };
 
-            var url;
-            if (operation === 'add') {
-                url = 'http://{{ api_url }}/receitas/add';
-            } else if (operation === 'remove') {
-                url = 'http://{{ api_url }}/ingredientes/remove';
-            } else {
-                alert('Operação desconhecida');
-                return;
+            for (let i = 0; i < ingredienteCount; i++) {
+                const ingrediente = formData.get(`ingredientes[${i}]`);
+                const quantidade = formData.get(`quantidades[${i}]`);
+                if (ingrediente && quantidade) {
+                    receita.ingredientes.push({
+                        nome: ingrediente,
+                        quantidade: quantidade
+                    });
+                }
             }
-            url = 'http://{{ api_url }}/receitas/add';
-
+*/
             const token = localStorage.getItem('jwt');
 
             $.ajax({
-                url: url,
+                url: 'http://{{ api_url }}/receitas/add',
                 type: 'GET',
-                data: {
-                    nome: ing,
-                    quantidade: qnt,
-                    unidade: unid,
-                    validade: validade
-                },
+                contentType: 'application/json',
+                data: receita,
                 headers: {
                     'Authorization': 'Bearer ' + token
                 },
-                success: function(response) {
+                success: function (response) {
                     location.href = location.href;
                 },
-                error: function() {
-                    alert('Acesso Negado!! ' + url + ' ' + ing + ' ' + qnt);
+                error: function () {
+                    alert('Acesso Negado ao adicionar receita!');
                 }
             });
+
+
+
+
+
+           // renderTable(receitas); // Suponho que já tenha a função renderTable implementada em seu código
         });
+
+
     });
+
 </script>
 
     {% endblock conteudo %}
