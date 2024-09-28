@@ -125,7 +125,7 @@ function renderTable(receitas) {
         const token = localStorage.getItem('jwt');
 
         // Exemplo de como enviar o objeto params para o backend
-        fetch(`http://{{ api_url }}/receitas/add?${params.toString()}`, {
+        fetch(`{{ api_url }}/receitas/add?${params.toString()}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,  // Inclusão do token no cabeçalho

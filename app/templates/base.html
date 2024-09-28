@@ -15,7 +15,7 @@
     <script>
 
 var url;
-      url = 'http://{{ api_url }}/privado';
+      url = '{{ api_url }}/privado';
 
       var token = localStorage.getItem('jwt'); // Obtenha o token do localStorage
 
@@ -60,7 +60,7 @@ var url;
       async function quantidade_vencidos() {
       
           const balao = document.getElementById('alerta-vencidos');
-          const apiUrl = 'http://{{ api_url }}/ingredientes/quantidade_vencidos';
+          const apiUrl = '{{ api_url }}/ingredientes/quantidade_vencidos';
           const response = await fetch(apiUrl);
           const data = await response.json(); 
           balao.innerText = data.vencidos; 

@@ -23,9 +23,9 @@
 
       var url;
       if(operation === 'add') {
-        url = 'http://{{ api_url }}/ingredientes/add';
+        url = '{{ api_url }}/ingredientes/add';
       } else if(operation === 'remove') {
-        url = 'http://{{ api_url }}/ingredientes/remove';
+        url = '{{ api_url }}/ingredientes/remove';
       } else {
         alert('Operação desconhecida');
         return;

@@ -5,7 +5,7 @@
 
 <script>
     async function logout() {
-        const url = 'http://{{ api_url }}/logout';
+        const url = '{{ api_url }}/logout';
         const token = localStorage.getItem('jwt'); // Obtenha o token do localStorage
   
         try {

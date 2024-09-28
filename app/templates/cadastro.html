@@ -15,7 +15,7 @@
       var senha = $("#senha").val();
     
       var url;
-      url = 'http://{{ api_url }}/users/create';
+      url = '{{ api_url }}/users/create';
 
       var token = localStorage.getItem('jwt'); // Obtenha o token do localStorage
 
