@@ -81,8 +81,7 @@ jobs:
               --network nginx-proxy \
               --restart always \
               -e "VIRTUAL_HOST=${branch}.${repo/*-/}.${{ env.DOMINIO }}" \
-              ${repo}:${branch}
-              -e "LETSENCRYPT_HOST=${branch}.${repo/*-/}.${{ env.DOMINIO }}" \
+              -e "LETSENCRYPT_HOST=${branch}.${repo/*-/}.${{ env.DOMINIO }}" ${repo}:${branch} \
           docker rm -f ${repo}_${branch}_a || true
         else
           docker run -d \
@@ -90,8 +89,7 @@ jobs:
               --network nginx-proxy \
               --restart always \
               -e "VIRTUAL_HOST=${branch}.${repo/*-/}.${{ env.DOMINIO }}" \
-              ${repo}:${branch}
-              -e "LETSENCRYPT_HOST=${branch}.${repo/*-/}.${{ env.DOMINIO }}" \
+              -e "LETSENCRYPT_HOST=${branch}.${repo/*-/}.${{ env.DOMINIO }}" ${repo}:${branch} \
           docker rm -f ${repo}_${branch}_b || true
         fi
         echo "Aplicação exposta em: ${branch}.${repo/*-/}.${{ env.DOMINIO }}"
