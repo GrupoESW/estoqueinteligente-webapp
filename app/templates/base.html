@@ -12,6 +12,35 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>    
     </head>
   <body>
+    <script>
+
+var url;
+      url = 'http://{{ api_url }}/privado';
+
+      var token = localStorage.getItem('jwt'); // Obtenha o token do localStorage
+
+    $.ajax({
+        url: url,
+        type: 'GET',
+        headers: {
+        'Authorization': 'Bearer ' + token // Adicione o token ao cabeçalho de autorização
+    },
+        success: function(response) {
+          alerta('Usuário criado com sucesso!')
+        },
+        error: function() {
+          if (response.status === 401) {
+                  return response.json().then(data => {
+                      window.location.href = data.redirect;
+                  });
+              } else {
+                  return response.text();
+              }
+        }
+      });
+  </script>
+
+
     {% include 'menu.html' %}
 
     <section class="home-section">
@@ -21,10 +50,23 @@
 
       <div class="text">
         <p class="text">Transformando desperdício em delícias! Controle seu estoque.</p>
-        <span class="notification">2</span>
+        <span id="alerta-vencidos" class="notification">-</span>
       </div>
     
     {% block conteudo %}{% endblock conteudo %}
     </section>
+
+    <script>
+      async function quantidade_vencidos() {
+      
+          const balao = document.getElementById('alerta-vencidos');
+          const apiUrl = 'http://{{ api_url }}/ingredientes/quantidade_vencidos';
+          const response = await fetch(apiUrl);
+          const data = await response.json(); 
+          balao.innerText = data.vencidos; 
+      }
+      quantidade_vencidos();
+
+    </script>
   </body>
 </html>

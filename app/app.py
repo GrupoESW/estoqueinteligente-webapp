@@ -38,6 +38,18 @@ def sugestoes():
     title = "Sugestões"
     return render_template('sugestoes.html',api_url=api_url,title=title)
 
+@app.route('/cadastro')
+def cadastro():
+    api_url = os.environ.get('VIRTUAL_HOST').replace('webapp', 'apinode')
+    title = "Cadastro"
+    return render_template('cadastro.html',api_url=api_url,title=title)
+
+@app.route('/logout')
+def logout():
+    api_url = os.environ.get('VIRTUAL_HOST').replace('webapp', 'apinode')
+    title = "Logout"
+    return render_template('logout.html',api_url=api_url,title=title)
+
 @app.route('/config')
 def config():
     title = "Configurações"

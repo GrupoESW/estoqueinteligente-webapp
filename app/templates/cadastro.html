@@ -1,0 +1,68 @@
+{% extends 'base-logout.html' %}
+
+{% block conteudo %} 
+<div class="text">
+  <p class="text">Crie sua conta: </p>
+</div>
+
+<script>
+  $(document).ready(function(){
+    $("#cadastro").on('submit', function(event) {
+      event.preventDefault(); 
+      var nome = $("#nome").val();
+      var cpf = $("#cpf").val();
+      var email = $("#email").val();
+      var senha = $("#senha").val();
+    
+      var url;
+      url = 'http://{{ api_url }}/users/create';
+
+      var token = localStorage.getItem('jwt'); // Obtenha o token do localStorage
+
+    $.ajax({
+        url: url,
+        type: 'GET',
+        data: {
+          nome: nome,
+          email: email,
+          senha: senha,
+          cpf: cpf
+        },
+        headers: {
+        'Authorization': 'Bearer ' + token, // Adicione o token ao cabeçalho de autorização
+    },
+        success: function(response) {
+          alerta('Usuário criado com sucesso!')
+        },
+        error: function() {
+          alert('Acesso Negado!! ' + url + ' ' + ing + ' ' + qnt)
+        }
+      });
+  });
+  });
+</script>    
+
+ <div class="panels"> 
+  <div style="display: block;">
+      <div>
+          <span id="inserePopupClose" class="close-button">&times;</span>
+          <form id="cadastro">
+            <label for="nome">Nome:</label><br>
+            <input type="text" id="nome" name="nome" required><br>
+            
+            <label for="cpf">CPF:</label><br>
+            <input type="text" id="cpf" name="cpf" name="cpf" required><br>
+            
+            <label for="email">Email:</label><br>
+            <input type="mail" id="email" name="email" required><br>
+
+            <label for="senha">Senha:</label><br>
+            <input type="password" id="senha" name="senha" required><br>
+            
+            <input type="submit" value="Executar">
+          </form>
+      </div>
+    </div>
+
+  </div>
+    {% endblock conteudo %}

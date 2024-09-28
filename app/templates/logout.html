@@ -1,0 +1,46 @@
+{% extends 'base-logout.html' %}
+
+{% block conteudo %} 
+
+
+<script>
+    async function logout() {
+        const url = 'http://{{ api_url }}/logout';
+        const token = localStorage.getItem('jwt'); // Obtenha o token do localStorage
+  
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token // Adicione o token ao cabeçalho de autorização
+                }
+            });
+  
+            // Verifique se a resposta é bem-sucedida
+            if (response.ok) {
+                const data = await response.json();
+                // Remover o token do localStorage
+                localStorage.removeItem('jwt');
+                // Redirecionar para o URL especificado no campo redirect
+                if (data.redirect) {
+                  window.location.href = data.redirect;
+                } else {
+                  // Se não houver campo redirect na resposta, redirecionar para a home page
+                  window.location.href = '/';
+                }
+            } else {
+                console.error('Failed to logout:', response.status, response.statusText);
+                // Remover o token do localStorage mesmo em caso de falha no logout e redirecionar para a home page
+                localStorage.removeItem('jwt');
+                window.location.href = '/';
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            // Remover o token do localStorage em caso de erro e redirecionar para a home page
+            localStorage.removeItem('jwt');
+            window.location.href = '/';
+        }
+    }
+      logout();
+  </script>
+    {% endblock conteudo %}
