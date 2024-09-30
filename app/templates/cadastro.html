@@ -16,7 +16,7 @@
     
       var url;
       url = '{{ api_url }}/users/create';
-      
+
     $.ajax({
         url: url,
         type: 'GET',
@@ -27,7 +27,7 @@
           cpf: cpf
         },
         success: function(response) {
-          alerta('Usuário criado com sucesso!')
+          alert('Usuário criado com sucesso!')
         },
         error: function() {
           alert('Acesso Negado!! ' + url + ' ' + ing + ' ' + qnt)
