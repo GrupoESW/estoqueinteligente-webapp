@@ -16,9 +16,7 @@
     
       var url;
       url = '{{ api_url }}/users/create';
-
-      var token = localStorage.getItem('jwt'); // Obtenha o token do localStorage
-
+      
     $.ajax({
         url: url,
         type: 'GET',
@@ -28,9 +26,6 @@
           senha: senha,
           cpf: cpf
         },
-        headers: {
-        'Authorization': 'Bearer ' + token, // Adicione o token ao cabeçalho de autorização
-    },
         success: function(response) {
           alerta('Usuário criado com sucesso!')
         },
