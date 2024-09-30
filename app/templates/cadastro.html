@@ -30,7 +30,8 @@
           alert('Usuário criado com sucesso!')
         },
         error: function() {
-          alert('Acesso Negado!! ' + url + ' ' + ing + ' ' + qnt)
+          console.error('Erro completo:', xhr);
+          alert('Erro!')
         }
       });
   });
