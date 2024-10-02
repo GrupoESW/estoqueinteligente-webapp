@@ -42,7 +42,8 @@ fetch(apiUrl, requestOptions)
     return response.json();
   })
   .then(data => {
-    outputElement.textContent = JSON.stringify(data, null, 2);
+    //outputElement.textContent = JSON.stringify(data, null, 2);
+    alert("Cadastro realizado com sucesso!");
   })
   .catch(error => {
     console.error
