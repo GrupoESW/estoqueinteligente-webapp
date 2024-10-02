@@ -4,7 +4,7 @@
 <div class="panels">
   <div class="panel">
     <div class="panel-title">Ingredientes vencendo:</div>
-      <div id='alerta-vencidos' class="panel-value">-</div>
+      <div id='vencidos' class="panel-value">-</div>
   </div>
 
   <div class="panel">
@@ -24,7 +24,7 @@
   <script>
     async function quantidade_vencidos() {
     
-        const balao = document.getElementById('alerta-vencidos');
+        const balao = document.getElementById('vencidos');
         const apiUrl = '{{ api_url }}/ingredientes/quantidade_vencidos';
         const response = await fetch(apiUrl);
         const data = await response.json(); 
