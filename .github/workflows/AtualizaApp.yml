@@ -38,9 +38,7 @@ jobs:
           sed -ri "s|HOSTNAME|${dominio}|" compose.yaml
           sed -i "s/DOMINIO/${branch}.${repo/*-/}.${{ env.DOMINIO }}/g" compose.yaml
 
-          sed -i "s/http/https/" app/app.py
-          sed -i "s/ORIGIN/https:\/\/${branch}.webapp.${{ env.DOMINIO }}/g" app.js    
-          sed -i "s/ORIGIN/https:\/\/${branch}.webapp.${{ env.DOMINIO }}/g" routes/index.js     
+          sed -i "s/http/https/" app/app.py   
  
           echo "Aplicação será exposta em: ${branch}.${repo/*-/}.${{ env.DOMINIO }}"
   
