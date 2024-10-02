@@ -8,48 +8,11 @@ on:
   workflow_dispatch:
     
 env:
-  PORTA: 8080
   DOMINIO: "dispensa.technsolutions.com.br"
 
 jobs:
-  build-base:
-    runs-on: estoqueinteligente-webapp-contabo
-    outputs:
-      output1: ${{ steps.build-base.outputs.workflows }}
-    steps:
-    - uses: actions/checkout@v4
-    - uses: dorny/paths-filter@v3
-      id: build-base
-      with:
-        filters: |
-          workflows:
-            - 'package.json'
-            - 'package-lock.json'
-            - 'Dockerfile.base'
-    - name: Cria Variáveis
-      id: create_variables
-      continue-on-error: true
-      run: |
-          branch=${{ github.ref }}
-          branch=${branch/refs\/heads\//}
-          repo=${{ github.repository }}
-          repo=${repo/*\//}
-          repo=${repo,,} # converte o nome do repositório para minúsculo
-
-          echo $branch | tee branch.txt
-          echo $repo | tee repo.txt
-            
-    - name: Constrói imagem base
-      if: steps.build-base.outputs.workflows == 'true'
-      run: |
-        branch=$(cat branch.txt)
-        repo=$(cat repo.txt)
-        docker build -t ${repo}:base -f Dockerfile.base .
-    
   build-e-run:
     runs-on: estoqueinteligente-webapp-contabo
-    needs: build-base
-    if: (success() || failure())
     steps:
     - uses: actions/checkout@v3
 
@@ -66,33 +29,21 @@ jobs:
           echo $branch | tee branch.txt
           echo $repo | tee repo.txt
             
-    - name: Atualiza imagem do app
-      id: change_image
+    - name: Seta url da aplicação
       run: |
-        branch=$(cat branch.txt)
-        repo=$(cat repo.txt)
+          branch=$(cat branch.txt)
+          repo=$(cat repo.txt)
+          
+          dominio=${{ env.DOMINIO }}
+          sed -ri "s|HOSTNAME|${dominio}|" compose.yaml
+          sed -i "s/DOMINIO/${branch}.${repo/*-/}.${{ env.DOMINIO }}/g" compose.yaml
 
-        sed -i "s/FROM REPO:base/FROM ${repo}:base/g" Dockerfile
-        docker build -t ${repo}:${branch} -f Dockerfile .
-    
-        if docker inspect "${repo}_${branch}_a" >/dev/null 2>&1; then
-          docker run -d \
-              --name ${repo}_${branch}_b \
-              --network nginx-proxy \
-              --restart always \
-              -e "VIRTUAL_HOST=${branch}.${repo/*-/}.${{ env.DOMINIO }}" \
-              -e "LETSENCRYPT_HOST=${branch}.${repo/*-/}.${{ env.DOMINIO }}" ${repo}:${branch} 
-          docker rm -f ${repo}_${branch}_a || true
-        else
-          docker run -d \
-              --name ${repo}_${branch}_a \
-              --network nginx-proxy \
-              --restart always \
-              -e "VIRTUAL_HOST=${branch}.${repo/*-/}.${{ env.DOMINIO }}" \
-              -e "LETSENCRYPT_HOST=${branch}.${repo/*-/}.${{ env.DOMINIO }}" ${repo}:${branch} 
-          docker rm -f ${repo}_${branch}_b || true
-        fi
-        echo "Aplicação exposta em: ${branch}.${repo/*-/}.${{ env.DOMINIO }}"
-
-
-
+          sed -i "s/http/https/" app/app.py
+          sed -i ""
+          sed -i "s/ORIGIN/https:\/\/${branch}.webapp.${{ env.DOMINIO }}/g" app.js    
+          sed -i "s/ORIGIN/https:\/\/${branch}.webapp.${{ env.DOMINIO }}/g" routes/index.js     
+ 
+          echo "Aplicação será exposta em: ${branch}.${repo/*-/}.${{ env.DOMINIO }}"
+  
+    - name: Inicia novo container
+      run: docker compose build --no-cache && docker compose up -d --force-recreate
