@@ -22,7 +22,7 @@
 
   {% endblock conteudo %}
   <script>
-    async function quantidade_vencidos() {
+    async function quantidade_vencidos2() {
     
         const balao = document.getElementById('vencidos');
         const apiUrl = '{{ api_url }}/ingredientes/quantidade_vencidos';
@@ -30,6 +30,6 @@
         const data = await response.json(); 
         balao.innerText = data.vencidos; 
     }
-    quantidade_vencidos();
+    quantidade_vencidos2();
 
   </script>
