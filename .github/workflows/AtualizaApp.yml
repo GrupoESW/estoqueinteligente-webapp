@@ -39,7 +39,6 @@ jobs:
           sed -i "s/DOMINIO/${branch}.${repo/*-/}.${{ env.DOMINIO }}/g" compose.yaml
 
           sed -i "s/http/https/" app/app.py
-          sed -i ""
           sed -i "s/ORIGIN/https:\/\/${branch}.webapp.${{ env.DOMINIO }}/g" app.js    
           sed -i "s/ORIGIN/https:\/\/${branch}.webapp.${{ env.DOMINIO }}/g" routes/index.js     
  

@@ -1,0 +1,17 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - VIRTUAL_HOST=DOMINIO
+      - LETSENCRYPT_HOST=DOMINIO
+    networks:
+      - nginx-proxy 
+    restart: always
+
+networks:
+  nginx-proxy:
+    external: true
+
+
