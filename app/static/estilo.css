@@ -48,10 +48,11 @@ body {
 .container {
     width: 300px;
     padding: 16px;
-    background-color: rgba(245, 216, 55, 0.877);
+    background-color: rgba(0, 0, 0, 0.877);
     margin: 0 auto;
     margin-top: 100px;
     border-radius: 15px;
+    color: white;
 }
 
 .btn {
