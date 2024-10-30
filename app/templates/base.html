@@ -13,21 +13,31 @@
     </head>
   <body>
     <script>
-function isAuthenticated() {
-        const token = localStorage.getItem('jwt');
-        return token !== null;
-    }
 
-    function redirectToLogin() {
-        window.location.href = '/';
-    }
+var url;
+      url = '{{ api_url }}/privado';
 
-    // Verificação de autenticação na carga da página
-    document.addEventListener('DOMContentLoaded', function() {
-        if (!isAuthenticated()) {
-            redirectToLogin();
+      var token = localStorage.getItem('jwt'); // Obtenha o token do localStorage
+
+    $.ajax({
+        url: url,
+        type: 'GET',
+        headers: {
+        'Authorization': 'Bearer ' + token // Adicione o token ao cabeçalho de autorização
+    },
+        success: function(response) {
+          alerta('Usuário criado com sucesso!')
+        },
+        error: function() {
+          if (response.status === 401) {
+                  return response.json().then(data => {
+                      window.location.href = data.redirect;
+                  });
+              } else {
+                  return response.text();
+              }
         }
-    });
+      });
   </script>
 
 
