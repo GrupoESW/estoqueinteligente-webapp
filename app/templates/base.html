@@ -20,29 +20,26 @@ var url;
       var token = localStorage.getItem('jwt'); // Obtenha o token do localStorage
 
       $.ajax({
-       url: url,
-       type: 'GET',
-       headers: {
-           'Authorization': 'Bearer ' + token // Adicione o token ao cabeçalho de autorização
-       },
-       success: function(response) {
-           alert('Usuário criado com sucesso!');
-       },
-       error: function(jqXHR) {
-           if (jqXHR.status === 401) {
-               try {
-                   var data = JSON.parse(jqXHR.responseText);
-                   if (data.redirect) {
-                       window.location.href = data.redirect;
-                   }
-               } catch (e) {
-                   console.error("Erro ao processar o redirecionamento:", e);
-               }
-           } else {
-               console.error("Erro:", jqXHR.responseText);
-           }
-       }
-   });
+    url: url,
+    type: 'GET',
+    headers: {
+        'Authorization': 'Bearer ' + token // Adicione o token ao cabeçalho de autorização
+    },
+    error: function(jqXHR) {
+        if (jqXHR.status === 401 || jqXHR.status === 403) { // Verifique ambos, 401 e 403
+            try {
+                var data = JSON.parse(jqXHR.responseText);
+                if (data.redirect) {
+                    window.location.href = data.redirect
+                }
+            } catch (e) {
+                console.error("Erro ao processar o redirecionamento:", e);
+            }
+        } else {
+            console.error("Erro:", jqXHR.responseText);
+        }
+    }
+});
   </script>
 
 
