@@ -2,7 +2,6 @@
 <html lang="pt-br" dir="ltr">
   <head>
     <script>
-      (function () {
       var url;
             url = '{{ api_url }}/privado';
             var token = localStorage.getItem('jwt'); // Obtenha o token do localStorage
@@ -28,7 +27,6 @@
               }
           }
       });
-      })();
         </script>
     <meta charset="UTF-8">
     <title>{{ title }} | Dispensa Inteligente</title>
