@@ -19,35 +19,39 @@
 
     // Função para criar uma linha da tabela
     function createTableRow(data) {
-    const row = document.createElement('tr');
+        const row = document.createElement('tr');
 
-    const nameCell = document.createElement('td');
-    nameCell.textContent = data.nome;
-    row.appendChild(nameCell);
+        const nameCell = document.createElement('td');
+        nameCell.textContent = data.nome;
+        row.appendChild(nameCell);
 
-    const quantityCell = document.createElement('td');
-    quantityCell.textContent = `${data.quantidade} ${data.unidade}`;
-    row.appendChild(quantityCell);
+        const quantityCell = document.createElement('td');
+        quantityCell.textContent = `${data.quantidade} ${data.unidade}`;
+        row.appendChild(quantityCell);
 
-    const validadeCell = document.createElement('td');
-    validadeCell.textContent = data.validade;
-    row.appendChild(validadeCell);
+        const validadeCell = document.createElement('td');
+        validadeCell.textContent = data.validade;
+        row.appendChild(validadeCell);
 
-    // Verificação de validade com formatação correta
-    const [day, month, year] = data.validade.split('/');
-    const validadeDate = new Date(year, month , day);  // Criação de um objeto Date
+        // Verificação de validade com formatação correta
+        const [day, month, year] = data.validade.split('/');
+        const validadeDate = new Date(year, month - 1, day);  // Corrigir mês, que é zero-indexed
 
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    tomorrow.setHours(0, 0, 0, 0);
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        tomorrow.setHours(0, 0, 0, 0);
 
-    // Destaque se o ingrediente está vencendo a partir de amanhã
-    if (validadeDate <= tomorrow) {
-        row.style.backgroundColor = 'yellow';
+        // Alertas para debugar
+        alert(`Validade de ${data.nome}: ${validadeDate.toDateString()}`);
+        alert(`Data de amanhã: ${tomorrow.toDateString()}`);
+
+        // Destaque se o ingrediente está vencendo a partir de amanhã
+        if (validadeDate <= tomorrow) {
+            row.style.backgroundColor = 'yellow';
+        }
+
+        return row;
     }
-
-    return row;
-}
 
     // Função para popular a tabela
     async function populateTable() {
