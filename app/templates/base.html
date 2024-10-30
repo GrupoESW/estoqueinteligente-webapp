@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-br" dir="ltr">
   <head>
+    <meta charset="UTF-8">
+    <title>{{ title }} | Dispensa Inteligente</title>
     <script>
+
       var url;
             url = '{{ api_url }}/privado';
+      
             var token = localStorage.getItem('jwt'); // Obtenha o token do localStorage
       
             $.ajax({
@@ -28,8 +32,6 @@
           }
       });
         </script>
-    <meta charset="UTF-8">
-    <title>{{ title }} | Dispensa Inteligente</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
     <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
@@ -37,9 +39,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>    
-    
     </head>
   <body>
+
+
 
     {% include 'menu.html' %}
 
