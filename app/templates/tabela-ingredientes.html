@@ -41,10 +41,6 @@
         tomorrow.setDate(tomorrow.getDate() + 1);
         tomorrow.setHours(0, 0, 0, 0);
 
-        // Alertas para debugar
-        alert(`Validade de ${data.nome}: ${validadeDate.toDateString()}`);
-        alert(`Data de amanhã: ${tomorrow.toDateString()}`);
-
         // Destaque se o ingrediente está vencendo a partir de amanhã
         if (validadeDate <= tomorrow) {
             row.style.backgroundColor = 'yellow';
