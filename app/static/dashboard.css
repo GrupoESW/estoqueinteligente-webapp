@@ -444,6 +444,21 @@
   padding: 10px 24px; /* Espaço interno para melhor apresentação */
 }
 
+.botoeslogin {
+  margin: 4px 20px;
+  background-color: #3498db; /* você pode alterar para a cor de azul que preferir */
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  width: 80%;
+  cursor: pointer;
+  border-radius: 12px; /* isto vai arredondar os cantos do botão */
+  padding: 10px 24px; /* Espaço interno para melhor apresentação */
+}
+
 .botoes:hover {
   background-color: #2980b9; /* muda a cor quando o cursor está em cima */
   text-decoration: none; /* remove qualquer sublinhado do texto no hover */
