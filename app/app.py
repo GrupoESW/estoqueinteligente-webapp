@@ -4,51 +4,51 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    api_url = os.environ.get('VIRTUAL_HOST').replace('webapp', 'apinode')
+    api_url = os.environ.get('VIRTUAL_HOST')
     title = "Login"
-    return render_template('login.html', api_url="http://" + api_url ,title=title)
+    return render_template('login.html', api_url="http://" + api_url + "/api",title=title)
 
 @app.route('/login')
 def login():
-    api_url = os.environ.get('VIRTUAL_HOST').replace('webapp', 'apinode')
+    api_url = os.environ.get('VIRTUAL_HOST')
     title = "Login" 
-    return render_template('login.html', api_url="http://" + api_url,title=title)
+    return render_template('login.html', api_url="http://" + api_url + "/api",title=title)
 
 @app.route('/dashboard')
 def dashboard():
-    api_url = os.environ.get('VIRTUAL_HOST').replace('webapp', 'apinode')
+    api_url = os.environ.get('VIRTUAL_HOST')
     title = "Dashboard" 
-    return render_template('dash.html',api_url="http://" + api_url,title=title)
+    return render_template('dash.html',api_url="http://" + api_url + "/api",title=title)
 
 @app.route('/estoque')
 def estoque():
-    api_url = os.environ.get('VIRTUAL_HOST').replace('webapp', 'apinode')
+    api_url = os.environ.get('VIRTUAL_HOST')
     title = "Estoque"
-    return render_template('estoque.html',api_url="http://" + api_url,title=title)
+    return render_template('estoque.html',api_url="http://" + api_url + "/api",title=title)
 
 @app.route('/receitas')
 def receitas():
-    api_url = os.environ.get('VIRTUAL_HOST').replace('webapp', 'apinode')
+    api_url = os.environ.get('VIRTUAL_HOST')
     title = "Receitas"
-    return render_template('receitas.html',api_url="http://" + api_url,title=title)
+    return render_template('receitas.html',api_url="http://" + api_url + "/api",title=title)
 
 @app.route('/sugestoes')
 def sugestoes():
-    api_url = os.environ.get('VIRTUAL_HOST').replace('webapp', 'apinode')
+    api_url = os.environ.get('VIRTUAL_HOST')
     title = "Sugestões"
-    return render_template('sugestoes.html',api_url="http://" + api_url,title=title)
+    return render_template('sugestoes.html',api_url="http://" + api_url + "/api",title=title)
 
 @app.route('/cadastro')
 def cadastro():
-    api_url = os.environ.get('VIRTUAL_HOST').replace('webapp', 'apinode')
+    api_url = os.environ.get('VIRTUAL_HOST')
     title = "Cadastro"
-    return render_template('cadastro.html',api_url="http://" + api_url,title=title)
+    return render_template('cadastro.html',api_url="http://" + api_url + "/api",title=title)
 
 @app.route('/logout')
 def logout():
-    api_url = os.environ.get('VIRTUAL_HOST').replace('webapp', 'apinode')
+    api_url = os.environ.get('VIRTUAL_HOST')
     title = "Logout"
-    return render_template('logout.html',api_url="http://" + api_url,title=title)
+    return render_template('logout.html',api_url="http://" + api_url + "/api",title=title)
 
 @app.route('/config')
 def config():
