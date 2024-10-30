@@ -37,7 +37,7 @@
         const validadeDate = new Date(data.validade);
         const tomorrow = new Date();
         tomorrow.setDate(tomorrow.getDate() + 1); // Ajustando para amanhã, comparando apenas partes de data
-        validityDate.setHours(0, 0, 0, 0);
+        validadeDate.setHours(0, 0, 0, 0);
         tomorrow.setHours(0, 0, 0, 0);
 
         if (validadeDate.getTime() <= tomorrow.getTime()) {
