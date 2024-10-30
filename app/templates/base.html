@@ -13,38 +13,21 @@
     </head>
   <body>
     <script>
-
-var url;
-      url = '{{ api_url }}/privado';
-
-      var token = localStorage.getItem('jwt'); // Obtenha o token do localStorage
-
-    $.ajax({
-        url: url,
-        type: 'GET',
-        headers: {
-        'Authorization': 'Bearer ' + token // Adicione o token ao cabeçalho de autorização
-    },
-        success: function(response) {
-          alerta('Usuário criado com sucesso!')
-        },
-        error: function(jqXHR) {
-        if (jqXHR.status === 401) {
-            try {
-                // Tenta converter a resposta JSON
-                var data = JSON.parse(jqXHR.responseText);
-                // Verifica se existe a chave "redirect"
-                if (data.redirect) {
-                    window.location.href = data.redirect;
-                }
-            } catch (e) {
-                console.error("Erro ao processar o redirecionamento:", e);
-            }
-        } else {
-            console.error("Erro:", jqXHR.responseText);
-        }
+function isAuthenticated() {
+        const token = localStorage.getItem('jwt');
+        return token !== null;
     }
-});
+
+    function redirectToLogin() {
+        window.location.href = '/';
+    }
+
+    // Verificação de autenticação na carga da página
+    document.addEventListener('DOMContentLoaded', function() {
+        if (!isAuthenticated()) {
+            redirectToLogin();
+        }
+    });
   </script>
 
 
