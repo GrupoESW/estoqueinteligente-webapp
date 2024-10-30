@@ -19,33 +19,35 @@
 
     // Função para criar uma linha da tabela
     function createTableRow(data) {
-        const row = document.createElement('tr');
+    const row = document.createElement('tr');
 
-        const nameCell = document.createElement('td');
-        nameCell.textContent = data.nome;
-        row.appendChild(nameCell);
+    const nameCell = document.createElement('td');
+    nameCell.textContent = data.nome;
+    row.appendChild(nameCell);
 
-        const quantityCell = document.createElement('td');
-        quantityCell.textContent = `${data.quantidade} ${data.unidade}`;
-        row.appendChild(quantityCell);
+    const quantityCell = document.createElement('td');
+    quantityCell.textContent = `${data.quantidade} ${data.unidade}`;
+    row.appendChild(quantityCell);
 
-        const validadeCell = document.createElement('td');
-        validadeCell.textContent = data.validade;
-        row.appendChild(validadeCell);
+    const validadeCell = document.createElement('td');
+    validadeCell.textContent = data.validade;
+    row.appendChild(validadeCell);
 
-        // Verificar se a validade é a partir de amanhã e aplicar estilo
-        const validadeDate = new Date(data.validade);
-        const tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1); // Ajustando para amanhã, comparando apenas partes de data
-        validadeDate.setHours(0, 0, 0, 0);
-        tomorrow.setHours(0, 0, 0, 0);
+    // Verificação de validade com formatação correta
+    const [day, month, year] = data.validade.split('/');
+    const validadeDate = new Date(year, month , day);  // Criação de um objeto Date
 
-        if (validadeDate.getTime() <= tomorrow.getTime()) {
-            row.style.backgroundColor = 'yellow'; // Destaque, ajuste a cor conforme necessário
-        }
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(0, 0, 0, 0);
 
-        return row;
+    // Destaque se o ingrediente está vencendo a partir de amanhã
+    if (validadeDate <= tomorrow) {
+        row.style.backgroundColor = 'yellow';
     }
+
+    return row;
+}
 
     // Função para popular a tabela
     async function populateTable() {
