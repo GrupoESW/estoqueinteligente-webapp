@@ -28,16 +28,23 @@ var url;
         success: function(response) {
           alerta('Usuário criado com sucesso!')
         },
-        error: function() {
-          if (response.status === 401) {
-                  return response.json().then(data => {
-                      window.location.href = data.redirect;
-                  });
-              } else {
-                  return response.text();
-              }
+        error: function(jqXHR) {
+        if (jqXHR.status === 401) {
+            try {
+                // Tenta converter a resposta JSON
+                var data = JSON.parse(jqXHR.responseText);
+                // Verifica se existe a chave "redirect"
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                }
+            } catch (e) {
+                console.error("Erro ao processar o redirecionamento:", e);
+            }
+        } else {
+            console.error("Erro:", jqXHR.responseText);
         }
-      });
+    }
+});
   </script>
 
 
