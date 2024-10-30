@@ -20,18 +20,29 @@
     // Função para criar uma linha da tabela
     function createTableRow(data) {
         const row = document.createElement('tr');
-        
+
         const nameCell = document.createElement('td');
         nameCell.textContent = data.nome;
         row.appendChild(nameCell);
-        
+
         const quantityCell = document.createElement('td');
         quantityCell.textContent = `${data.quantidade} ${data.unidade}`;
         row.appendChild(quantityCell);
-        
+
         const validadeCell = document.createElement('td');
         validadeCell.textContent = data.validade;
         row.appendChild(validadeCell);
+
+        // Verificar se a validade é a partir de amanhã e aplicar estilo
+        const validadeDate = new Date(data.validade);
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1); // Ajustando para amanhã, comparando apenas partes de data
+        validityDate.setHours(0, 0, 0, 0);
+        tomorrow.setHours(0, 0, 0, 0);
+
+        if (validadeDate.getTime() <= tomorrow.getTime()) {
+            row.style.backgroundColor = 'yellow'; // Destaque, ajuste a cor conforme necessário
+        }
 
         return row;
     }
@@ -41,7 +52,7 @@
         try {
             const response = await fetch(apiUrl);
             const data = await response.json();
-            
+
             const tableBody = document.getElementById('table-body');
             tableBody.innerHTML = ''; // Limpa a tabela antes de popular
 
@@ -56,5 +67,5 @@
 
     // Chama a função para popular a tabela
     populateTable();
-});
+  });
 </script>
