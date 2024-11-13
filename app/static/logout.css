@@ -1,0 +1,471 @@
+/* Google Font Link */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+* {
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins" , sans-serif;
+}
+.texto-colorido {
+  padding: 10px; 
+  color:#E57C23; /* Aqui você pode usar qualquer cor que desejar, como "red", "green", "#FFA500", etc. */
+}
+.sidebar{
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 78px;
+  background: #11101D;
+  padding: 6px 14px;
+  z-index: 99;
+  transition: all 0.5s ease;
+}
+.sidebar.open{
+  width: 300px;
+}
+.sidebar .logo-details{
+  height: 60px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.sidebar .logo-details .icon{
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+.sidebar .logo-details .logo_name{
+  color: hsl(0, 0%, 100%);
+  font-size: 20px;
+  font-weight: 600;
+  padding: 20%;
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+.sidebar.open .logo-details .icon,
+.sidebar.open .logo-details .logo_name{
+  opacity: 1;
+}
+
+.sidebar .logo-details #btn{
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  font-size: 22px;
+  transition: all 0.4s ease;
+  font-size: 23px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+.sidebar.open .logo-details #btn{
+  text-align: right;
+}
+.sidebar i{
+  color: #fff;
+  height: 60px;
+  min-width: 50px;
+  font-size: 28px;
+  text-align: center;
+  line-height: 60px;
+}
+.sidebar .nav-list{
+  margin-top: 20px;
+  height: 100%;
+ 
+}
+.sidebar li{
+  position: relative;
+  margin: 8px 0;
+  list-style: none;
+}
+.sidebar li .tooltip{
+  position: absolute;
+  top: -20px;
+  left: calc(100% + 15px);
+  z-index: 3;
+  background: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 400;
+  opacity: 0;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: 0s;
+}
+.sidebar li:hover .tooltip{
+  opacity: 1;
+  pointer-events: auto;
+  transition: all 0.4s ease;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.sidebar.open li .tooltip{
+  display: none;
+}
+.sidebar input{
+  font-size: 15px;
+  color: #FFF;
+  font-weight: 400;
+  outline: none;
+  height: 50px;
+  width: 100%;
+  width: 50px;
+  border: none;
+  border-radius: 12px;
+  transition: all 0.5s ease;
+  background: #1d1b31;
+}
+.sidebar.open input{
+  padding: 0 20px 0 50px;
+  width: 100%;
+}
+.sidebar .bx-search{
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  font-size: 22px;
+  background: #1d1b31;
+  color: #FFF;
+}
+.sidebar.open .bx-search:hover{
+  background: #1d1b31;
+  color: #FFF;
+}
+.sidebar .bx-search:hover{
+  background: #FFF;
+  color: #11101d;
+}
+.sidebar li a{
+  display: flex;
+  height: 100%;
+  width: 100%;
+  border-radius: 12px;
+  align-items: center;
+  text-decoration: none;
+  transition: all 0.4s ease;
+  background: #11101D;
+}
+.sidebar li a:hover{
+  background: #FFF;
+}
+.sidebar li a .links_name{
+  color: #fff;
+  font-size: 15px;
+  font-weight: 400;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.4s;
+}
+.sidebar.open li a .links_name{
+  opacity: 1;
+  pointer-events: auto;
+}
+.sidebar li a:hover .links_name,
+.sidebar li a:hover i{
+  transition: all 0.5s ease;
+  color: #11101D;
+}
+.sidebar li i{
+  height: 50px;
+  line-height: 50px;
+  font-size: 18px;
+  border-radius: 12px;
+}
+.sidebar li.profile{
+  position: fixed;
+  height: 60px;
+  width: 78px;
+  left: 0;
+  bottom: -8px;
+  padding: 10px 14px;
+  background: #11101D;
+  transition: all 0.5s ease;
+  overflow: hidden;
+}
+.sidebar.open li.profile{
+  width: 300px;
+}
+.sidebar li .profile-details{
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+.sidebar li img{
+  height: 45px;
+  width: 45px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-right: 10px;
+}
+.sidebar li.profile .name,
+.sidebar li.profile .job{
+  font-size: 15px;
+  font-weight: 400;
+  color: #fff;
+  white-space: nowrap;
+}
+.sidebar li.profile .job{
+  font-size: 12px;
+}
+.sidebar .profile #log_out{
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  background: #1d1b31;
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  border-radius: 0px;
+  transition: all 0.5s ease;
+}
+.sidebar.open .profile #log_out{
+  width: 50px;
+  background: none;
+}
+.home-section{
+  position: relative;
+  background: #ffffff;
+  min-height: 100vh;
+  top: 0;
+  left: 78px;
+  width: 40%;
+  height: 80%;
+  transition: all 0.5s ease;
+  z-index: 2;
+  align-items: center;
+}
+.sidebar.open ~ .home-section{
+  left: 300px;
+  width: calc(100% - 300px);
+}
+.home-section .text { 
+  display: flex;
+  color: #11101d;
+  font-size: 25px;
+  font-weight: 500;
+  margin: 18px
+}
+@media (max-width: 420px) {
+  .sidebar li .tooltip{
+    display: none;
+  }
+}
+
+
+/* CSS do footer */
+
+/* Estilos para o footer */
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: #f8f9fa; /* Cor de fundo do footer */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Estilos para os ícones de mídia social no footer */
+.footer .btn-floating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin: 5px;
+  font-size: 18px;
+  text-align: center;
+}
+
+/* Estilos para o texto do footer */
+.footer .text-white {
+  color: #e01919; /* Cor do texto */
+}
+
+/* Estilos para o link no footer */
+.footer .text-white:hover {
+  color: #1b7ad8; /* Cor do texto ao passar o mouse */
+  text-decoration: none;
+}
+
+/* Estilos para a seção de mídia social no footer */
+.footer .mb-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: #7cabda; /* Cor de fundo da seção de mídia social */
+  display: flex;
+  align-items: center;
+}
+
+/* Estilos para a seção de copyright no footer */
+.footer .p-3 {
+  background-color: rgba(0, 0, 0, 0.2); /* Cor de fundo da seção de copyright */
+}
+
+/* Estilos para o link no footer */
+.footer a {
+  color: #000000; /* Cor do link */
+}
+
+/* Estilos para o link no footer quando hover */
+.footer a:hover {
+  color: #333333; /* Cor do link ao passar o mouse */
+}
+
+
+
+.notification {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    padding: 10px 15px;
+    background: red;
+    color: white;
+    border-radius: 50%;
+    font-size: 14px;
+  }
+  
+  .panel {
+    width: 20%;
+    height: 180px;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, .1);
+    background-color: #11101D;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 25px;
+    color: #fff;
+  }
+  
+  .panel-title .panel-value {
+    margin-bottom: 10px;
+  }
+  
+  .panels {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    width: 76%;
+    transition: 0.5s;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .table {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    width: 76%;
+    transition: 0.5s;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .rounded-table {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    margin-top: 20px;
+    width: 100%;
+  }
+  
+  .rounded-table th, .rounded-table td {
+    padding: 10px;
+    border: 1px solid #11101D;
+  }
+  
+  .rounded-table thead {
+    border: 1px solid #11101D;
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, .1);
+    background-color: #11101D;
+    color: #fff;
+  }
+
+  /* Estilos para o overlay (fundo escuro) */
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1;
+}
+
+/* Estilos para o popup */
+.popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.botoes {
+  margin: 4px 20px;
+  background-color: #3498db; /* você pode alterar para a cor de azul que preferir */
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 12px; /* isto vai arredondar os cantos do botão */
+  padding: 10px 24px; /* Espaço interno para melhor apresentação */
+}
+
+.botoeslogin {
+  margin: 4px 20px;
+  background-color: #3498db; /* você pode alterar para a cor de azul que preferir */
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  width: 80%;
+  cursor: pointer;
+  border-radius: 12px; /* isto vai arredondar os cantos do botão */
+  padding: 10px 24px; /* Espaço interno para melhor apresentação */
+}
+
+.botoes:hover {
+  background-color: #2980b9; /* muda a cor quando o cursor está em cima */
+  text-decoration: none; /* remove qualquer sublinhado do texto no hover */
+  color: white; /* mantenho a cor do texto branca */
+}
+
+div.panels a {
+  text-decoration: none;
+  color: white;
+  font-size:large;
+}
