@@ -469,3 +469,11 @@ div.panels a {
   color: white;
   font-size:large;
 }
+
+div.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
