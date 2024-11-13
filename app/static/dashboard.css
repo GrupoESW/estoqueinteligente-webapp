@@ -10,6 +10,11 @@
   padding: 10px; 
   color:#E57C23; /* Aqui você pode usar qualquer cor que desejar, como "red", "green", "#FFA500", etc. */
 }
+
+span.table-description {
+  padding-right: 70%;
+}
+
 .sidebar{
   position: fixed;
   left: 0;
