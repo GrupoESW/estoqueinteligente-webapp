@@ -10,6 +10,30 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>    
+    <script>
+      document.addEventListener('DOMContentLoaded', (event) => {
+          const cpfInput = document.getElementById('cpf');
+
+          cpfInput.addEventListener('input', function() {
+              let valor = cpfInput.value;
+
+              // Remove non-digit characters
+              valor = valor.replace(/\D/g, '');
+
+              // Aplica a máscara
+              if (valor.length > 3 && valor.length <= 6) {
+                  valor = valor.replace(/(\d{3})(\d+)/, '$1.$2');
+              } else if (valor.length > 6 && valor.length <= 9) {
+                  valor = valor.replace(/(\d{3})(\d{3})(\d+)/, '$1.$2.$3');
+              } else if (valor.length > 9) {
+                  valor = valor.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
+              }
+
+              // Atualiza o valor do campo de entrada
+              cpfInput.value = valor;
+          });
+      });
+  </script>
     </head>
   <body>
 
