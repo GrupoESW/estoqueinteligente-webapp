@@ -1,74 +1,86 @@
 <!DOCTYPE html>
 <html lang="pt-br" dir="ltr">
-  <head>
-    <meta charset="UTF-8">
-    <title>{{ title }} | Dispensa Inteligente</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
-    <!-- Boxicons CDN Link -->
-    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>    
-    </head>
-  <body>
-    <script>
 
-var url;
-      url = '{{ api_url }}/privado';
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title }} | Dispensa Inteligente</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+  <!-- Boxicons CDN Link -->
+  <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+</head>
 
+<body>
+  <script>
+    // Função que verifica a autenticação do usuário
+    function verificarAutenticacao() {
+      var url = '{{ api_url }}/privado';
       var token = localStorage.getItem('jwt'); // Obtenha o token do localStorage
 
       $.ajax({
-    url: url,
-    type: 'GET',
-    headers: {
-        'Authorization': 'Bearer ' + token // Adicione o token ao cabeçalho de autorização
-    },
-    error: function(jqXHR) {
-        if (jqXHR.status === 401 || jqXHR.status === 403) { // Verifique ambos, 401 e 403
+        url: url,
+        type: 'GET',
+        headers: {
+          'Authorization': 'Bearer ' + token // Adicione o token ao cabeçalho de autorização
+        },
+        error: function (jqXHR) {
+          if (jqXHR.status === 401 || jqXHR.status === 403) {
             try {
-                var data = JSON.parse(jqXHR.responseText);
-                if (data.redirect) {
-                    window.location.href = data.redirect
-                }
+              var data = JSON.parse(jqXHR.responseText);
+              if (data.redirect) {
+                window.location.href = data.redirect;
+              }
             } catch (e) {
-                console.error("Erro ao processar o redirecionamento:", e);
+              console.error("Erro ao processar o redirecionamento:", e);
             }
-        } else {
+          } else {
             console.error("Erro:", jqXHR.responseText);
+          }
         }
+      });
     }
-});
+
+    // Adiciona o escutador para o evento pageshow
+    window.addEventListener('pageshow', function (event) {
+      if (event.persisted) {
+        // O evento `persisted` é verdadeiro se a página estava no cache
+        verificarAutenticacao();
+      } else {
+        verificarAutenticacao();
+      }
+    });
   </script>
 
 
-    {% include 'menu.html' %}
+  {% include 'menu.html' %}
 
-    <section class="home-section">
-      <div class="text">
-        <h1 class="texto-colorido">{{ title }}</h1>
-      </div>
+  <section class="home-section">
+    <div class="text">
+      <h1 class="texto-colorido">{{ title }}</h1>
+    </div>
 
-      <div class="text">
-        <p class="text">Transformando desperdício em delícias! Controle seu estoque.</p>
-        <span id="alerta-vencidos" class="notification">-</span>
-      </div>
-    
+    <div class="text">
+      <p class="text">Transformando desperdício em delícias! Controle seu estoque.</p>
+      <span id="alerta-vencidos" class="notification">-</span>
+    </div>
+
     {% block conteudo %}{% endblock conteudo %}
-    </section>
+  </section>
 
-    <script>
-      async function quantidade_vencidos() {
-      
-          const balao = document.getElementById('alerta-vencidos');
-          const apiUrl = '{{ api_url }}/ingredientes/quantidade_vencidos';
-          const response = await fetch(apiUrl);
-          const data = await response.json(); 
-          balao.innerText = data.vencidos; 
-      }
-      quantidade_vencidos();
+  <script>
+    async function quantidade_vencidos() {
 
-    </script>
-  </body>
+      const balao = document.getElementById('alerta-vencidos');
+      const apiUrl = '{{ api_url }}/ingredientes/quantidade_vencidos';
+      const response = await fetch(apiUrl);
+      const data = await response.json();
+      balao.innerText = data.vencidos;
+    }
+    quantidade_vencidos();
+  </script>
+</body>
+
 </html>
