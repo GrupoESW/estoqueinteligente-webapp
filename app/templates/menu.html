@@ -1,3 +1,18 @@
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const logoutLink = document.querySelector('a[href="../logout"]');
+
+      logoutLink.addEventListener('click', function(event) {
+          const confirmation = confirm("Você tem certeza de que deseja sair?");
+          if (!confirmation) {
+              // Impede que o link de logout seja seguido
+              event.preventDefault();
+          }
+      });
+  });
+</script>
+
+
 <div class="sidebar"> 
   <div class="logo-details">
     <div class="logo_name">&nbsp;&nbsp;&nbsp;DISPENSA INTELIGENTE</div>     
