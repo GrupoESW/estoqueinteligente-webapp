@@ -1,6 +1,6 @@
 {% extends 'base-logout.html' %}
 
-{% block conteudo %} 
+{% block conteudo %}
 
 
 <title>Dispensa inteligente</title>
@@ -8,57 +8,58 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <script>
-    $(document).ready(function(){
-      $("#form-login").on('submit', function(event) {
-        event.preventDefault(); 
-        var username = $("#cpf").val();
-        var password = $("#senha").val();
+  $(document).ready(function () {
+    $("#form-login").on('submit', function (event) {
+      event.preventDefault();
+      var username = $("#cpf").val();
+      var password = $("#senha").val();
 
-        $.ajax({
-          url: '{{ api_url }}/login',
-          type: 'GET',
-          data: {
-            cpf: username,
-            senha: password
-          },
+      $.ajax({
+        url: '{{ api_url }}/login',
+        type: 'GET',
+        data: {
+          cpf: username,
+          senha: password
+        },
 
-       success: function(response, status) {
-        if(response.token) {
+        success: function (response, status) {
+          if (response.token) {
             // Armazene o token no local storage
-            localStorage.setItem('jwt', response.token);}
-
-        if(status == 'success') {
-             window.location.href = '/dashboard';
-         } else {
-        alert('Acesso negado!')
-         }
-          },
-         error: function() {
-            alert('Acesso negado!!')
+            localStorage.setItem('jwt', response.token);
           }
-        });
+
+          if (status == 'success') {
+            window.location.href = '/dashboard';
+          } else {
+            alert('Acesso negado!')
+          }
+        },
+        error: function () {
+          alert('Acesso negado!!')
+        }
       });
     });
-</script>    
+  });
+</script>
 </head>
 
 <body class="pagina-login">
 
-<div class="container">
+  <div class="container">
     <label class="title">Dispensa Inteligente</label>
-<br><br>
-<form id="form-login" action="#" method="get">
+    <br>
+    <form id="form-login" action="#" method="get">
 
-    <label for="uname"><b>Cpf</b></label>
-    <input type="text" placeholder="Insira o seu cpf" maxlength="14" name=cpf id=cpf required>
+      <label for="uname"><b>Cpf</b></label>
+      <input type="text" placeholder="Insira o seu cpf" maxlength="14" name=cpf id=cpf required>
 
-    <label for="psw"><b>Senha</b></label>
-    <input type="password" placeholder="Insira a sua senha" name="senha" id="senha" required>
+      <label for="psw"><b>Senha</b></label>
+      <input type="password" placeholder="Insira a sua senha" name="senha" id="senha" required>
 
-    <a href="/dashboard"><button type="submit" class="botoeslogin">Login</button></a>
-    <a href="/cadastro"><button class="botoeslogin">Cadastro</button></a>
-</form>
-    
-</div>
+      <a href="/dashboard"><button type="submit" class="botoeslogin">Login</button></a>
+      <a href="/cadastro"><button class="botoeslogin">Cadastro</button></a>
+    </form>
+
+  </div>
   </script>
-    {% endblock conteudo %}
+  {% endblock conteudo %}
