@@ -1,10 +1,12 @@
 {% extends 'base-logout.html' %}
 
 {% block conteudo %} 
+<body class="pagina-login">
 
-     
+  <div class="container">
+
 <div class="text">
-  <p class="text">Crie sua conta: </p>
+  <label class="title">Crie sua conta: </label>
 </div>
 
 <script>
@@ -54,7 +56,6 @@ fetch(apiUrl, requestOptions)
   });
 </script>    
 
- <div class="panels"> 
   <div style="display: block;">
       <div>
           <span id="inserePopupClose" class="close-button">&times;</span>
@@ -73,9 +74,8 @@ fetch(apiUrl, requestOptions)
             
             <input type="submit" value="Executar">
           </form>
-      </div>
     </div>
 
   </div>
-    
+</body>
     {% endblock conteudo %}
