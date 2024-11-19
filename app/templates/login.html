@@ -15,7 +15,7 @@
       var password = $("#senha").val();
 
       $.ajax({
-        url: '{{ api_url }}/login',
+        url: '{{ api_url }}/usuarios/login',
         type: 'GET',
         data: {
           cpf: username,
