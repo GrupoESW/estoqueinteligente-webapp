@@ -21,7 +21,7 @@
 
     // Nossa função para verificar autenticação do usuário
     function verificarAutenticacao() {
-        var url = '{{ api_url }}/usuarios/privado';
+        var url = '{{ api_url }}/usuarios/validar';
         var token = localStorage.getItem('jwt'); // Obtenha o token do localStorage
 
         $.ajax({
