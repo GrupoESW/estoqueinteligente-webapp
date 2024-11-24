@@ -15,7 +15,7 @@
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     // URL da API
-    const apiUrl = '{{ api_url }}/receitas/findallp';
+    const apiUrl = '{{ api_url }}/sugestoes/';
 
     // Função para criar uma linha da tabela
     function createTableRow(data) {
@@ -67,9 +67,13 @@
     // Função para popular a tabela
     async function populateTable() {
         try {
-            const response = await fetch(apiUrl);
-            const data = await response.json();
-            
+            const response = await fetch(apiUrl, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token // Adicione o token ao cabeçalho de autorização
+            }
+        })
+            const data = await response.json();            
             const tableBody = document.getElementById('table-body');
             tableBody.innerHTML = ''; // Limpa a tabela antes de popular
 

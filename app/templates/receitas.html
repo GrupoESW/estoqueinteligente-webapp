@@ -122,29 +122,21 @@ function renderTable(receitas) {
             }
 
         // Obter o token de autenticação (isso deve ser personalizado conforme seu back-end)
-        const token = localStorage.getItem('jwt');
-
+        var token = localStorage.getItem('jwt');
         // Exemplo de como enviar o objeto params para o backend
-        fetch(`{{ api_url }}/receitas/add?${params.toString()}`, {
-            method: 'GET',
+        $.ajax({
+            url: `{{ api_url }}/receitas/?${params.toString()}`,
+            type: 'POST',
+            dataType: 'x-www-form-urlencoded',
             headers: {
-                'Authorization': `Bearer ${token}`,  // Inclusão do token no cabeçalho
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        }).then(response => response.json())
-        .then(data => {
-            console.log(data);
-            // Sucesso na requisição
-            location.href = location.href;  // Redireciona ou atualiza a página
-        })
-        .catch(error => {
-            console.error(error);
-            alert('Acesso Negado ao adicionar receita!');
+                'Authorization': 'Bearer ' + token,  // Inclusão do token no cabeçalho
+            },
+                success: function(response) {
+                    location.href = location.href;
+                }
         });
-        
-        console.log(params.toString()); // Isso é só para debug
-    });
 });
+    });
 
            // renderTable(receitas); // Suponho que já tenha a função renderTable implementada em seu código
 </script>

@@ -14,18 +14,20 @@
       var operation = $("#operation").val();
     
       // Converte a data para o formato dd/mm/aaaa
-      const dateValue = validade; // valor no formato aaaa-mm-dd
-      if (dateValue) {
-          const [year, month, day] = dateValue.split('-');
-          const formattedDate = `${day}/${month}/${year}`;
-          validade = formattedDate;
-      }
+    //  const dateValue = validade; // valor no formato aaaa-mm-dd
+      //if (dateValue) {
+        //  const [year, month, day] = dateValue.split('-');
+          //const formattedDate = `${day}/${month}/${year}`;
+         // validade = formattedDate;
+      //}
 
       var url;
       if(operation === 'add') {
-        url = '{{ api_url }}/ingredientes/add';
+        url = '{{ api_url }}/ingredientes/';
+        type = 'POST';
       } else if(operation === 'remove') {
         url = '{{ api_url }}/ingredientes/remove';
+        type = 'POST';
       } else {
         alert('Operação desconhecida');
         return;
@@ -35,7 +37,8 @@
 
     $.ajax({
         url: url,
-        type: 'GET',
+        type: type,
+        dataType: 'json',
         data: {
           nome: ing,
           quantidade: qnt,

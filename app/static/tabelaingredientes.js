@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     // URL da API
-    const apiUrl = 'http://{{ api_url }}/ingredientes/list';
+    const apiUrl = 'http://{{ api_url }}/ingredientes';
 
     // Função para criar uma linha da tabela
     function createTableRow(data) {

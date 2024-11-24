@@ -1,12 +1,12 @@
 <div class="table">
-    <span style="background-color: red" class="table-description">Ingrediente vencido</span><br>
-    <span style="background-color: yellow" class="table-description">Ingrediente vencendo amanhã</span>
-    <table class="rounded-table">
+    <span style="background-color: rgba(255, 0, 0, 0.3);" class="table-description">Ingrediente vencido</span><br>
+    <span style="background-color: rgba(255, 255, 0, 0.3);" class="table-description">Ingrediente vencendo amanhã</span>
+    <table id="ingredientes-table" class="rounded-table">
         <thead>
             <tr>
-                <th>Nome</th>
-                <th>Quantidade</th>
-                <th>Validade</th>
+                <th id="nome-header">Nome</th>
+                <th id="quantidade-header">Quantidade</th>
+                <th id="validade-header">Validade</th>
             </tr>
         </thead>
         <tbody id="table-body">
@@ -15,63 +15,126 @@
     </table>
 </div>
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    // URL da API
-    const apiUrl = '{{ api_url }}/ingredientes/list';
-
-    // Função para criar uma linha da tabela
-    function createTableRow(data) {
+    document.addEventListener("DOMContentLoaded", () => {
+      const apiUrl = '{{ api_url }}/ingredientes/';
+      let currentSort = { column: 2, ascending: true }; // Estado de ordenação inicial
+  
+      function createTableRow(data) {
         const row = document.createElement('tr');
-
+  
         const nameCell = document.createElement('td');
         nameCell.textContent = data.nome;
         row.appendChild(nameCell);
-
+  
         const quantityCell = document.createElement('td');
         quantityCell.textContent = `${data.quantidade} ${data.unidade}`;
         row.appendChild(quantityCell);
-
+  
+        const dateValue = new Date(data.validade);
+        dateValue.setHours(0, 0, 0, 0);
+        const validade = dateValue.toLocaleDateString('pt-BR', { timeZone: 'UTC' });
+  
         const validadeCell = document.createElement('td');
-        validadeCell.textContent = data.validade;
+        validadeCell.textContent = validade;
         row.appendChild(validadeCell);
-
-        // Verificação de validade com formatação correta
-        const [day, month, year] = data.validade.split('/');
-        const validadeDate = new Date(year, month - 1, day);  // Corrigir mês, que é zero-indexed
-
-        const tomorrow = new Date();
+  
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+  
+        const tomorrow = new Date(today);
         tomorrow.setDate(tomorrow.getDate() + 1);
-        tomorrow.setHours(0, 0, 0, 0);
-
-        // Destaque se o ingrediente está vencendo a partir de amanhã
-        if (validadeDate < tomorrow) {
-            row.style.backgroundColor = 'red';
-        } else if (validadeDate <= tomorrow) {
-            row.style.backgroundColor = 'yellow';
+  
+        if (dateValue < today) {
+            row.style.backgroundColor = 'rgba(255, 0, 0, 0.3)';
+        } else if (
+            dateValue.getDate() === tomorrow.getDate() &&
+            dateValue.getMonth() === tomorrow.getMonth() &&
+            dateValue.getFullYear() === tomorrow.getFullYear()
+        ) {
+            row.style.backgroundColor = 'rgba(255, 255, 0, 0.3)';
+        } else if (
+            dateValue.getDate() === today.getDate() &&
+            dateValue.getMonth() === today.getMonth() &&
+            dateValue.getFullYear() === today.getFullYear()
+        ) {
+            row.style.backgroundColor = 'rgba(255, 255, 0, 0.3)';
         }
-
+        
+  
         return row;
-    }
-
-    // Função para popular a tabela
-    async function populateTable() {
+      }
+  
+      function sortTable(table, column, isDate = false) {
+        const rows = Array.from(table.querySelectorAll('tr')).slice(1); // Ignora o cabeçalho
+        const ascending = currentSort.column !== column || !currentSort.ascending; // Alterna a ordenação
+  
+        rows.sort((a, b) => {
+          const aText = a.children[column].textContent.trim();
+          const bText = b.children[column].textContent.trim();
+  
+          let comparison;
+          if (isDate) {
+            comparison = new Date(aText.split('/').reverse().join('-')) - new Date(bText.split('/').reverse().join('-'));
+          } else {
+            comparison = aText.localeCompare(bText);
+          }
+  
+          return ascending ? comparison : -comparison;
+        });
+  
+        rows.forEach(row => table.appendChild(row));
+  
+        // Atualiza o estado de ordenação
+        currentSort = { column, ascending };
+  
+        // Atualiza ícones de ordenação
+        document.querySelectorAll('th').forEach(th => th.classList.remove('sorted-asc', 'sorted-desc'));
+        document.querySelectorAll('th')[column].classList.add(ascending ? 'sorted-asc' : 'sorted-desc');
+      }
+  
+      async function populateTable() {
+        var token = localStorage.getItem('jwt');
+  
         try {
-            const response = await fetch(apiUrl);
-            const data = await response.json();
-
-            const tableBody = document.getElementById('table-body');
-            tableBody.innerHTML = ''; // Limpa a tabela antes de popular
-
-            data.forEach(item => {
-                const tableRow = createTableRow(item);
-                tableBody.appendChild(tableRow);
-            });
+          const response = await fetch(apiUrl, {
+            method: 'GET',
+            headers: {
+              'Authorization': 'Bearer ' + token
+            }
+          });
+          const data = await response.json();
+  
+          const tableBody = document.getElementById('table-body');
+          tableBody.innerHTML = '';
+  
+          data.forEach(item => {
+            const tableRow = createTableRow(item);
+            tableBody.appendChild(tableRow);
+          });
+  
+          // Ordena a tabela por data de validade ao carregar
+          const table = document.getElementById('ingredientes-table');
+          sortTable(table, 2, true); // Ordena pela terceira coluna (data), que é index 2
         } catch (error) {
-            console.error('Erro ao buscar dados da API:', error);
+          console.error('Erro ao buscar dados da API:', error);
         }
-    }
-
-    // Chama a função para popular a tabela
-    populateTable();
-  });
-</script>
+      }
+  
+      document.getElementById('nome-header').addEventListener('click', () => {
+        const table = document.getElementById('ingredientes-table');
+        sortTable(table, 0); // Ordena pela primeira coluna (nome)
+      });
+  
+      document.getElementById('quantidade-header').addEventListener('click', () => {
+        const table = document.getElementById('ingredientes-table');
+        sortTable(table, 1); // Ordena pela segunda coluna (quantidade)
+      });
+  
+      document.getElementById('validade-header').addEventListener('click', () => {
+        const table = document.getElementById('ingredientes-table');
+        sortTable(table, 2, true); // Ordena pela terceira coluna (data)
+      });
+  
+      populateTable();
+    });
+  </script>

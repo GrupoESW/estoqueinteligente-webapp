@@ -18,10 +18,11 @@
             window.location.reload();
         }
     });
+    const token = localStorage.getItem('jwt');
 
     // Nossa função para verificar autenticação do usuário
     function verificarAutenticacao() {
-        var url = '{{ api_url }}/usuarios/validar';
+        var url = '{{ api_url }}/usuarios/validarfront';
         var token = localStorage.getItem('jwt'); // Obtenha o token do localStorage
 
         $.ajax({
@@ -72,12 +73,17 @@
 
   <script>
     async function quantidade_vencidos() {
+      var token = localStorage.getItem('jwt'); // Obtenha o token do localStorage
 
       const balao = document.getElementById('alerta-vencidos');
-      const apiUrl = '{{ api_url }}/ingredientes/ingredientes/quantidade_vencidos';
-      const response = await fetch(apiUrl);
+      const apiUrl = '{{ api_url }}/ingredientes/quantidade_vencidos/';
+      const response = await fetch(apiUrl, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token // Adicione o token ao cabeçalho de autorização
+            }});
       const data = await response.json();
-      balao.innerText = data.vencidos;
+      balao.innerText = data.quantidade;
     }
     quantidade_vencidos();
   </script>

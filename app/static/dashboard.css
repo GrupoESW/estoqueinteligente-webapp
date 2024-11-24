@@ -477,3 +477,21 @@ div.panels a {
   color: white;
   font-size:large;
 }
+
+
+th {
+  cursor: pointer;
+  position: relative;
+}
+th:after {
+  content: '⇅'; /* Ícone para indicar ordenação */
+  position: absolute;
+  right: 8px;
+  opacity: 0.6;
+}
+th.sorted-asc:after {
+  content: '↑'; /* Ícone para ordenação ascendente */
+}
+th.sorted-desc:after {
+  content: '↓'; /* Ícone para ordenação descendente */
+}
