@@ -15,35 +15,35 @@
     </table>
 </div>
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const apiUrl = '{{ api_url }}/ingredientes/';
-      let currentSort = { column: 2, ascending: true }; // Estado de ordenação inicial
-  
-      function createTableRow(data) {
+  document.addEventListener("DOMContentLoaded", () => {
+    const apiUrl = '{{ api_url }}/ingredientes/';
+    let currentSort = { column: 2, ascending: true }; // Estado de ordenação inicial
+
+    function createTableRow(data) {
         const row = document.createElement('tr');
-  
+
         const nameCell = document.createElement('td');
         nameCell.textContent = data.nome;
         row.appendChild(nameCell);
-  
+
         const quantityCell = document.createElement('td');
         quantityCell.textContent = `${data.quantidade} ${data.unidade}`;
         row.appendChild(quantityCell);
-  
+
         const dateValue = new Date(data.validade);
-        dateValue.setHours(0, 0, 0, 0);
-        const validade = dateValue.toLocaleDateString('pt-BR', { timeZone: 'UTC' });
-  
+        dateValue.setHours(dateValue.getHours() + 3); // Ajusta para UTC-3
+        const validade = dateValue.toLocaleDateString('pt-BR');
+
         const validadeCell = document.createElement('td');
         validadeCell.textContent = validade;
         row.appendChild(validadeCell);
-  
+
         const today = new Date();
         today.setHours(0, 0, 0, 0);
-  
+
         const tomorrow = new Date(today);
         tomorrow.setDate(tomorrow.getDate() + 1);
-  
+
         if (dateValue < today) {
             row.style.backgroundColor = 'rgba(255, 0, 0, 0.3)';
         } else if (
@@ -59,10 +59,10 @@
         ) {
             row.style.backgroundColor = 'rgba(255, 255, 0, 0.3)';
         }
-        
-  
+
         return row;
-      }
+    }
+
   
       function sortTable(table, column, isDate = false) {
         const rows = Array.from(table.querySelectorAll('tr')).slice(1); // Ignora o cabeçalho

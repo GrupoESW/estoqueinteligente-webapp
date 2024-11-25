@@ -12,14 +12,6 @@
       var validade = $("#validade").val();
 
       var operation = $("#operation").val();
-    
-      // Converte a data para o formato dd/mm/aaaa
-    //  const dateValue = validade; // valor no formato aaaa-mm-dd
-      //if (dateValue) {
-        //  const [year, month, day] = dateValue.split('-');
-          //const formattedDate = `${day}/${month}/${year}`;
-         // validade = formattedDate;
-      //}
 
       var url;
       if(operation === 'add') {
@@ -68,24 +60,79 @@
           <form id="stock-operation">
             <label for="product">Produto:</label><br>
             <input type="text" id="product" name="product" required><br>
-            
+    
             <label for="quantity">Quantidade:</label><br>
             <input type="number" id="quantity" name="quantity" min="0" value="0" required><br>
-            
+    
             <label for="unid">Unidade:</label><br>
             <input type="text" id="unid" name="unid" value="kg" required><br>
-
+    
             <label for="validade">Validade:</label><br>
-            <input type="date" id="validade" name="validade" value="2024-10-02" required><br>
-
+            <input type="date" id="validade" name="validade" required><br>
+    
             <label for="operation">Operação:</label><br>
             <select id="operation" name="operation">
-              <option value="add">Adicionar ao estoque</option>
-              <option value="remove">Remover do estoque</option>
+                <option value="add">Adicionar ao estoque</option>
+                <option value="remove">Remover do estoque</option>
             </select><br>
-            
+    
             <input type="submit" value="Executar">
-          </form>
+        </form>
+    
+        <script>
+            $(document).ready(function() {
+                // Configura a data atual como padrão para o campo de validade
+                const today = new Date().toISOString().split('T')[0];
+                $('#validade').val(today);
+    
+
+                // Função para buscar ingredientes da API
+            function fetchIngredientes() {
+                const token = localStorage.getItem('jwt'); // Obtenha o token do localStorage
+
+                $.ajax({
+                    url: '{{ api_url }}/ingredientes/', // Substitua pela URL real da sua API
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    },
+                    success: function(data) {
+                        const ingredientes = [...new Set(data.map(item => item.nome))];
+                        const unidades = [...new Set(data.map(item => item.unidade))];
+
+                        setupAutocompleteing(ingredientes);
+                        setupAutocompleteunid(unidades);
+                    },
+                    error: function() {
+                        console.error('Erro ao buscar ingredientes');
+                    }
+                });
+            }
+
+            // Configura autocomplete para ingredientes
+            function setupAutocompleteing(ingredientes) {
+                $('#product').autocomplete({
+                    source: ingredientes,
+                    minLength: 0,
+                    delay: 0,
+                });
+            }
+
+            
+            // Configura autocomplete para ingredientes
+            function setupAutocompleteunid(unidades) {
+                $('#unid').autocomplete({
+                    source: unidades,
+                    minLength: 0,
+                    delay: 0,
+                });
+            }
+
+            // Chama a função para buscar ingredientes
+            fetchIngredientes();
+
+            });
+        </script>
       </div>
   </div>
   {% include "tabela-ingredientes.html" %}

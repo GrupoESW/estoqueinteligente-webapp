@@ -495,3 +495,14 @@ th.sorted-asc:after {
 th.sorted-desc:after {
   content: '↓'; /* Ícone para ordenação descendente */
 }
+
+.ui-autocomplete {
+  background-color: white;
+  border: 1px solid black; /* Adiciona uma borda preta */
+  color: black;
+  max-height: 100px;
+  width: fit-content;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 1000; /* Assegura que o menu de sugestões está acima de outros elementos */
+}
