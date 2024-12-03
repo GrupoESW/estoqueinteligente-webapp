@@ -6,54 +6,35 @@
 </head>
 
 <body class="pagina-login">
+  <script>
+    $(document).ready(function() {
+        $('#cadastro').on('submit', function(event) {
+            event.preventDefault();
+            
+            const formData = {
+                nome: $('#nome').val(),
+                email: $('#email').val(),
+                senha: $('#senha').val(),
+                cpf: $('#cpf').val()
+            };
 
-    <script>
-      $(document).ready(function () {
-        $("#cadastro").on('submit', function (event) {
-          event.preventDefault();
-          var nome = $("#nome").val();
-          var cpf = $("#cpf").val();
-          var email = $("#email").val();
-          var senha = $("#senha").val();
-
-          var apiUrl;
-          apiUrl = '{{ api_url }}/usuarios/users/create';
-
-          const data = {
-            nome: nome,
-            email: email,
-            senha: senha,
-            cpf: cpf
-          };
-
-          const requestOptions = {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-          };
-
-          fetch(apiUrl, requestOptions)
-            .then(response => {
-              if (!response.ok) {
-                throw new Error('Network response was not ok');
-              }
-              return response.json();
-            })
-            .then(data => {
-              //outputElement.textContent = JSON.stringify(data, null, 2);
-              window.location.href = '/dashboard';
-            })
-            .catch(error => {
-              console.error
-
-              ('Error:', error);
-              alert('Erro ao cadastrar usuário:' + error);
+            $.ajax({
+                url: '{{ api_url }}/usuarios/users/create',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(formData),
+                success: function(response) {
+                    alert('Usuário registrado com sucesso!');
+                    window.location.href = '/login';
+                },
+                error: function(xhr) {
+                    const error = xhr.responseJSON;
+                    alert('Erro ao registrar usuário: ' + error.message);
+                  }
             });
         });
-      });
-    </script>
+    });
+</script>
 
   <div class="container">
     <label class="title">Crie sua conta: </label>

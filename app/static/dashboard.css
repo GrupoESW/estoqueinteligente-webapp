@@ -506,3 +506,38 @@ th.sorted-desc:after {
   overflow-x: hidden;
   z-index: 1000; /* Assegura que o menu de sugestões está acima de outros elementos */
 }
+
+.icon-button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  margin: 0 5px;
+  font-size: 1.2em;
+}
+.icon-button:hover {
+  color: #007BFF;
+}
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%; /* Position above */
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}

@@ -4,67 +4,90 @@
             <tr>
                 <th>Nome</th>
                 <th>Ingredientes</th>
-                <th>Modo de preparo</th>
+                <th>Modo de Preparo</th>
+                <th>Ações</th>
             </tr>
         </thead>
-        <tbody id="table-body">
-            <!-- Conteúdo dinâmico será inserido aqui -->
+        <tbody id="recipe-table-body">
+            <!-- Receitas dinâmicas serão inseridas aqui -->
         </tbody>
     </table>
 </div>
+
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    // URL da API
-    const apiUrl = '{{ api_url }}/receitas';
-
-    // Função para criar uma linha da tabela
-    function createTableRow(data) {
-        const row = document.createElement('tr');
-        
-        const nameCell = document.createElement('td');
-        nameCell.textContent = data.nome;
-        row.appendChild(nameCell);
-        
-        const ingredientsCell = document.createElement('td');
-        // Transformar a lista de ingredientes em uma string legível
-        const ingredientsText = data.ingredientes.map(ingrediente => 
-            `${ingrediente.nome} \(${ingrediente.quantidade}\)`
-        ).join(', ');
-        ingredientsCell.textContent = ingredientsText;
-        row.appendChild(ingredientsCell);
-
-        const validadeCell = document.createElement('td');
-        validadeCell.textContent = data.instrucoes;
-        row.appendChild(validadeCell);
-
-        return row;
-    }
-
-
-    // Função para popular a tabela
-    async function populateTable() {
-        try {
-            const response = await fetch(apiUrl, {
-            method: 'GET',
-            headers: {
-                'Authorization': 'Bearer ' + token // Adicione o token ao cabeçalho de autorização
-            }
-        })
-            const data = await response.json();
-            
-            const tableBody = document.getElementById('table-body');
-            tableBody.innerHTML = ''; // Limpa a tabela antes de popular
-
-            data.forEach(item => {
-                const tableRow = createTableRow(item);
-                tableBody.appendChild(tableRow);
+    $(document).ready(function() {
+        function loadRecipes() {
+            // Função para carregar receitas da API
+            const token = localStorage.getItem('jwt');
+            $.ajax({
+                url: '{{ api_url }}/receitas',
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                },
+                success: function(data) {
+                    const tableBody = $('#recipe-table-body');
+                    tableBody.empty();
+                    data.forEach(recipe => {
+                        const row = $('<tr></tr>');
+                        row.append(`<td>${recipe.nome}</td>`);
+                        row.append(`<td>${recipe.ingredientes.map(i => i.nome).join(', ')}</td>`);
+                        row.append(`<td>${recipe.instrucoes}</td>`);
+                        row.append(`
+                            <td>
+                                <div class="tooltip">
+                                    <button class="icon-button delete-recipe" data-id="${recipe._id}">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                    <span class="tooltiptext">Deletar Receita</span>
+                                </div>
+                            </td>
+                        `);
+                        tableBody.append(row);
+                    });
+                },
+                error: function() {
+                    console.error('Erro ao carregar receitas');
+                }
             });
-        } catch (error) {
-            console.error('Erro ao buscar dados da API:', error);
         }
-    }
 
-    // Chama a função para popular a tabela
-    populateTable();
+
+        $('#recipe-table-body').on('click', '.edit-recipe', function() {
+            const recipeId = $(this).data('id');
+            // Lógica para editar receita
+            alert('Editar receita ' + recipeId)
+        });
+
+        $('#recipe-table-body').on('click', '.delete-recipe', function() {
+            const recipeId = $(this).data('id');
+            //alert('Deletar receita ' + recipeId);
+            const token = localStorage.getItem('jwt');
+            $.ajax({
+                url: `{{ api_url }}/receitas/${recipeId}`,
+                method: 'DELETE',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                },
+                success: function(data) {
+                    location.reload();
+        },
+        error: function() {
+            alert('Erro ao deletar receita');
+        }
+        });
+
+    });
+    
+        // Carregar receitas ao iniciar
+        loadRecipes();
 });
+
+//                             <div class="tooltip">
+//                              <button class="icon-button edit-recipe" data-id="${recipe._id}">
+//                               <i class="fas fa-pencil-alt"></i>
+//                              </button>
+//                              <span class="tooltiptext">Editar Receita</span>
+//                             </div>
+
 </script>

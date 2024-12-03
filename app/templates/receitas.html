@@ -59,7 +59,6 @@ function renderTable(receitas) {
 
 
     document.addEventListener('DOMContentLoaded', function () {
-        //let ingredienteCount = 0;
 
         document.getElementById('add-ingredient').addEventListener('click', () => {
             const container = document.getElementById('ingredients-container');
@@ -113,32 +112,32 @@ function renderTable(receitas) {
         params.append('nome', formData.get('nome'));
         params.append('preparo', formData.get('preparo'));
         
-        //let i = 0;
         // Iterando sobre os ingredientes e quantidades
         for (let i = 0; i < ingredienteCount; i++) {
                 params.append(`ingredientes[${i}]`, formData.get(`ingredientes[${i}]`));
-                //params.append(`ingredientes[${i}]`, 'teste');
                 params.append(`quantidades[${i}]`, formData.get(`quantidades[${i}]`));
             }
 
-        // Obter o token de autenticação (isso deve ser personalizado conforme seu back-end)
         var token = localStorage.getItem('jwt');
-        // Exemplo de como enviar o objeto params para o backend
         $.ajax({
             url: `{{ api_url }}/receitas/?${params.toString()}`,
             type: 'POST',
-            dataType: 'x-www-form-urlencoded',
+            contentType: 'application/x-www-form-urlencoded',
             headers: {
                 'Authorization': 'Bearer ' + token,  // Inclusão do token no cabeçalho
             },
                 success: function(response) {
-                    location.href = location.href;
+                    document.body.removeChild(overlay);
+                    popup.style.display = 'none';
+                    location.reload();
+                },
+                error: function() {
+                    alert('Erro ao adicionar receita');
                 }
         });
 });
     });
 
-           // renderTable(receitas); // Suponho que já tenha a função renderTable implementada em seu código
 </script>
 
     {% endblock conteudo %}
